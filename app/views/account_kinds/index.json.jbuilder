@@ -1,0 +1,1 @@
+json.array! @account_kinds, partial: 'account_kinds/account_kind', as: :account_kind

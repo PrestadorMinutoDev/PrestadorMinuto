@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing User Phones</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User_ID</th>
+      <th>Phone_ID</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_phones.each do |user_phone| %>
+      <tr>
+        <td><%= user_phone.user_id %></td>
+        <td><%= user_phone.phone_id %></td>
+        <td><%= link_to 'Show', user_phone %></td>
+        <td><%= link_to 'Edit', edit_user_phone_path(user_phone) %></td>
+        <td><%= link_to 'Destroy', user_phone, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User phone', new_user_phone_path %>

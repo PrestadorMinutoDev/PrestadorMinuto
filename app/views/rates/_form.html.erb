@@ -1,0 +1,41 @@
+<%= form_for(@rate) do |f| %>
+  <% if @rate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rate.errors.count, "error") %> prohibited this rate from being saved:</h2>
+
+      <ul>
+      <% @rate.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :punctuality %><br>
+    <%= f.text_field :punctuality %>
+  </div>
+  <div class="field">
+    <%= f.label :quality %><br>
+    <%= f.text_field :quality %>
+  </div>
+  <div class="field">
+    <%= f.label :presentation %><br>
+    <%= f.text_field :presentation %>
+  </div>
+  <div class="field">
+    <%= f.label :comments %><br>
+    <%= f.text_field :comments %>
+  </div>
+  <div class="field">
+    <%= f.label :Ad_ID %><br>
+    <%= f.text_field :ad_id %>
+  </div>
+  <div class="field">
+    <%= f.label :User_ID %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

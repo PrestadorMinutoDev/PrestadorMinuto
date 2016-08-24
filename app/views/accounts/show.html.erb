@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account status:</strong>
+  <%= @account.account_status %>
+  <%= @account.user_id %>
+  <%= @account.account_kind_id %>
+</p>
+
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>

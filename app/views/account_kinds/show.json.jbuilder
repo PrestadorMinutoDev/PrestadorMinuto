@@ -1,0 +1,1 @@
+json.partial! "account_kinds/account_kind", account_kind: @account_kind

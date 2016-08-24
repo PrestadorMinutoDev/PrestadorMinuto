@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Parameter:</strong>
+  <%= @account_resource.parameter %>
+</p>
+<p>
+<strong>Account Kind ID:</strong>
+<%= @account_resource.account_kind_id %>
+</p>
+<p>
+  <strong>Resource ID:</strong>
+  <%= @account_resource.resource_id %>
+</p>
+
+<%= link_to 'Edit', edit_account_resource_path(@account_resource) %> |
+<%= link_to 'Back', account_resources_path %>

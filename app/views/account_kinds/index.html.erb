@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Account Kinds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @account_kinds.each do |account_kind| %>
+      <tr>
+        <td><%= account_kind.name %></td>
+        <td><%= link_to 'Show', account_kind %></td>
+        <td><%= link_to 'Edit', edit_account_kind_path(account_kind) %></td>
+        <td><%= link_to 'Destroy', account_kind, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account kind', new_account_kind_path %>

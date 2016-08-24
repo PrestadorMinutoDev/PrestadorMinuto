@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  punctuality: 9.99
+  quality: 9.99
+  presentation: 9.99
+  comments: MyString
+
+two:
+  punctuality: 9.99
+  quality: 9.99
+  presentation: 9.99
+  comments: MyString

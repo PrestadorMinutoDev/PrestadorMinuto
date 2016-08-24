@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  rating_avg: 9.99
+  adscol: MyString
+  profession_id_1: 1
+  profession_id_2: 1
+
+two:
+  description: MyText
+  rating_avg: 9.99
+  adscol: MyString
+  profession_id_1: 1
+  profession_id_2: 1

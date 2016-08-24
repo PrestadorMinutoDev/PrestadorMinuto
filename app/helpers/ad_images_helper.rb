@@ -1,0 +1,2 @@
+module AdImagesHelper
+end
