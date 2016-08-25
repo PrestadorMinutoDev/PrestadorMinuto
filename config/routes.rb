@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :phones
   resources :operators
   resources :professions
+  resources :register_users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

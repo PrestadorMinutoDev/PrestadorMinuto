@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Register Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name:</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @register_users.each do |register_user| %>
+      <tr>
+        <td><%= register_user.name %></td>
+        <td><%= link_to 'Show', register_user %></td>
+        <td><%= link_to 'Edit', edit_register_user_path(register_user) %></td>
+        <td><%= link_to 'Destroy', register_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Register user', new_register_user_path %>
