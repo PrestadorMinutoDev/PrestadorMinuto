@@ -17,6 +17,7 @@ class RegisterUsersController < ApplicationController
     @register_user = Operator.new
   end
 
+
   # GET /register_users/1/edit
   def edit
   end
