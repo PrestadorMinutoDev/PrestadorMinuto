@@ -14,9 +14,9 @@
 ActiveRecord::Schema.define(version: 20160817201870) do
 
   create_table "account_kinds", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",       limit: 55
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "account_resources", force: :cascade do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20160817201870) do
   add_index "ad_images", ["image_id"], name: "index_ad_images_on_image_id", using: :btree
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "zip",        limit: 255
+    t.string   "zip",        limit: 8
     t.string   "address1",   limit: 255
     t.string   "address2",   limit: 255
     t.string   "address3",   limit: 255
@@ -69,12 +69,11 @@ ActiveRecord::Schema.define(version: 20160817201870) do
 
   create_table "ads", force: :cascade do |t|
     t.text     "description",     limit: 65535
-    t.decimal  "rating_avg",                    precision: 10
-    t.string   "adscol",          limit: 255
+    t.decimal  "rating_avg",                    precision: 3, scale: 2
     t.integer  "profession_id_1", limit: 4
     t.integer  "profession_id_2", limit: 4
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
     t.integer  "profession_id",   limit: 4
   end
 
@@ -102,35 +101,35 @@ ActiveRecord::Schema.define(version: 20160817201870) do
   end
 
   create_table "operators", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",       limit: 25
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "phones", force: :cascade do |t|
-    t.string   "number",      limit: 255
-    t.boolean  "haswp"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "number",      limit: 11
+    t.boolean  "haswp",                  default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "operator_id", limit: 4
   end
 
   add_index "phones", ["operator_id"], name: "index_phones_on_operator_id", using: :btree
 
   create_table "professions", force: :cascade do |t|
-    t.string   "name_m",     limit: 255
-    t.string   "name_f",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name_m",     limit: 75
+    t.string   "name_f",     limit: 75
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "rates", force: :cascade do |t|
-    t.decimal  "punctuality",              precision: 10
-    t.decimal  "quality",                  precision: 10
-    t.decimal  "presentation",             precision: 10
+    t.decimal  "punctuality",              precision: 3, scale: 2
+    t.decimal  "quality",                  precision: 3, scale: 2
+    t.decimal  "presentation",             precision: 3, scale: 2
     t.string   "comments",     limit: 255
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "ad_id",        limit: 4
     t.integer  "user_id",      limit: 4
   end
@@ -146,9 +145,9 @@ ActiveRecord::Schema.define(version: 20160817201870) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",       limit: 2
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "user_phones", force: :cascade do |t|
@@ -162,11 +161,11 @@ ActiveRecord::Schema.define(version: 20160817201870) do
   add_index "user_phones", ["user_id"], name: "index_user_phones_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",       limit: 175
     t.integer  "mobile",     limit: 4
-    t.string   "doc",        limit: 255
+    t.string   "doc",        limit: 75
     t.date     "birthdate"
-    t.string   "email",      limit: 255
+    t.string   "email",      limit: 175
     t.date     "last_logon"
     t.date     "certdate"
     t.datetime "created_at",             null: false

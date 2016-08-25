@@ -1,11 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.string :name
+      t.string :name,limit:175
       t.integer :mobile
-      t.string :doc
+      t.string :doc,limit:75
       t.date :birthdate
-      t.string :email
+      t.string :email,limit:175
       t.date :last_logon
       t.date :certdate
 

@@ -1,8 +1,8 @@
 class CreateProfessions < ActiveRecord::Migration
   def change
     create_table :professions do |t|
-      t.string :name_m
-      t.string :name_f
+      t.string :name_m,limit:75
+      t.string :name_f,limit:75
 
       t.timestamps null: false
     end
