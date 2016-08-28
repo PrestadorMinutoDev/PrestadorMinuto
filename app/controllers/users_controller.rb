@@ -1,3 +1,4 @@
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -10,6 +11,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    tmpcryp =::Decrypter.new
+    @user = User.find(params[:id])
+    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
   end
 
   # GET /users/new
@@ -24,6 +28,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    tmpcryp =::Decrypter.new
     @user = User.new(user_params)
 
     ##Criando o Operador
@@ -35,8 +40,11 @@ class UsersController < ApplicationController
     @phone = Phone.find_or_create_by(number: @user.mobile)
     @phone.operator_id = @operator.id
     @phone.save
-
+    @user.slt = tmpcryp.get_cipher_salt @user.email, @user.name #salt gerado a partir do email e do nome do usuário
+    @user.doc = tmpcryp.encrypt @user.doc, @user.slt
+    @user.pwd = tmpcryp.creatHash @user.pwd
     @user.mobile = nil
+
     @user.save
     ##Criando o User_phone
     @user_phone = UserPhone.new

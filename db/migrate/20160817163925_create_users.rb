@@ -8,6 +8,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email,limit:175
       t.date :last_logon
       t.date :certdate
+      t.string :pwd,limit:175
+      t.binary :slt
+
 
       t.timestamps null: false
     end

@@ -168,8 +168,10 @@ ActiveRecord::Schema.define(version: 20160817201870) do
     t.string   "email",      limit: 175
     t.date     "last_logon"
     t.date     "certdate"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "pwd",        limit: 175
+    t.binary   "slt",        limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "address_id", limit: 4
     t.integer  "image_id",   limit: 4
   end
