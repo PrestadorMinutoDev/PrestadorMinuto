@@ -3,8 +3,8 @@ class Decrypter
     OpenSSL::Cipher::Cipher.new('aes-256-cbc')  # ('aes-256-cbc')
   end
 
-  def get_cipher_salt ( param1, param2)
-    Time.now.to_s+'prestador' + param1 + 'minuto' + param2 +'.com'
+  def get_cipher_salt
+    BCrypt::Engine.generate_salt
   end
 
   def decrypt(value,cipher_key)

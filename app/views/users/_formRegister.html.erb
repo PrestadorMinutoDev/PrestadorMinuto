@@ -1,0 +1,101 @@
+<%= form_for @user,:url =>{:action => 'create_register_user'} do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <!-- Begin USER model -->
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :pwd %><br>
+      <%= f.password_field :pwd %>
+    </div>
+
+    <div class="field">
+      <%= f.label :pwd_confirmation %><br>
+      <%= f.password_field :pwd_confirmation %>
+    </div>
+
+    <!-- Begin Phones model -->
+    <%= f.fields_for :phones do |phones| %>
+        <div>
+          <%= phones.label :number %>
+          <%= phones.text_field :number %><br>
+
+          <%= phones.label :haswp %>
+          <%= phones.check_box :haswp %><br>
+        </div>
+    <% end %>
+
+    <!-- End Phones model -->
+
+    <div class="field">
+      <%= f.label :doc %><br>
+      <%= f.text_field :doc %>
+    </div>
+    <div class="field">
+      <%= f.label :birthdate %><br>
+      <%= f.date_select :birthdate %>
+    </div>
+    <div class="field">
+      <%= f.label :email %><br>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :certdate %><br>
+      <%= f.date_select :certdate %>
+    </div>
+
+
+    <!-- End USER model -->
+
+
+    <!-- Begin ADDRESS model -->
+
+    <%= f.fields_for :address do |address| %>
+        <div>
+          <%= address.label :zip %>
+          <%= address.text_field :zip,class: 'form-control' %><br>
+
+          <%= address.label :address1 %>
+          <%= address.text_field :address1 %><br>
+
+          <%= address.label :address2 %>
+          <%= address.text_field :address2 %><br>
+
+          <%= address.label :address3 %>
+          <%= address.text_field :address3 %><br>
+
+          <%= address.label :city %>
+          <%= address.text_field :city %><br>
+
+          <%= address.label :state %>
+          <%= address.text_field :state %><br>
+
+          <%= address.label :country %>
+          <%= address.text_field :country %><br>
+        </div>
+    <% end %>
+
+
+
+    <!-- End ADDRESS model -->
+
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

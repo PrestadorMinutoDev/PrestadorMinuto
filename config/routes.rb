@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get 'register_user/index'
+  get 'registerUser', to: 'users#register_user'
+  post 'registerUser', to: 'users#create_register_user'
+
 
   get 'admin/index'
 

@@ -19,15 +19,52 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.phones.build
   end
 
   # GET /users/1/edit
   def edit
   end
 
+
+  # GET /register_user/new
+  def register_user
+    @user = User.new
+    @user.phones.build
+  end
+
+  # POST /register_user/create
+  def create_register_user
+
+    @user = User.new(register_user_params)
+
+
+
+    #@user.slt = tmpcryp.get_cipher_salt
+    #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
+    #@user.pwd = tmpcryp.creatHash @user.pwd
+    #@user.save
+
+
+    respond_to do |format|
+      if @user.save
+        #redirect_to action: 'show', id:@user.id
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :register_user }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+
+
+    end
+
   # POST /users
   # POST /users.json
   def create
+
+    puts "Entrou no Users"
     tmpcryp =::Decrypter.new
     @user = User.new(user_params)
 
@@ -40,7 +77,7 @@ class UsersController < ApplicationController
     @phone = Phone.find_or_create_by(number: @user.mobile)
     @phone.operator_id = @operator.id
     @phone.save
-    @user.slt = tmpcryp.get_cipher_salt @user.email, @user.name #salt gerado a partir do email e do nome do usuário
+    @user.slt = tmpcryp.get_cipher_salt
     @user.doc = tmpcryp.encrypt @user.doc, @user.slt
     @user.pwd = tmpcryp.creatHash @user.pwd
     @user.mobile = nil
@@ -106,4 +143,8 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :mobile, :doc, :birthdate, :email, :last_logon, :certdate)
     end
+  def register_user_params
+    params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation,
+                                  phones_attributes: [:number,:haswp])
+  end
 end

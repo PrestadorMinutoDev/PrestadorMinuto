@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20160817201870) do
     t.boolean  "haswp",                  default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.integer  "operator_id", limit: 4
+    t.integer  "operator_id", limit: 4,  default: 1
   end
 
   add_index "phones", ["operator_id"], name: "index_phones_on_operator_id", using: :btree
@@ -162,7 +162,6 @@ ActiveRecord::Schema.define(version: 20160817201870) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name",       limit: 175
-    t.integer  "mobile",     limit: 4
     t.string   "doc",        limit: 75
     t.date     "birthdate"
     t.string   "email",      limit: 175
@@ -178,7 +177,6 @@ ActiveRecord::Schema.define(version: 20160817201870) do
 
   add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree
   add_index "users", ["image_id"], name: "index_users_on_image_id", using: :btree
-  add_index "users", ["mobile"], name: "fk_rails_9ae76c4791", using: :btree
 
   add_foreign_key "account_resources", "account_kinds"
   add_foreign_key "account_resources", "resources"
@@ -198,5 +196,4 @@ ActiveRecord::Schema.define(version: 20160817201870) do
   add_foreign_key "user_phones", "users"
   add_foreign_key "users", "addresses"
   add_foreign_key "users", "images"
-  add_foreign_key "users", "user_phones", column: "mobile"
 end
