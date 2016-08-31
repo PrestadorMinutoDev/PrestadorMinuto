@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   before_save 'encrypt_my_data','hash_my_pass'
 
 
+
+
   def encrypt_my_data
     tmpcryp = Decrypter.new
     if doc.present?

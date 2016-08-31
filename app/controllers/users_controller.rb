@@ -39,7 +39,6 @@ class UsersController < ApplicationController
     @user = User.new(register_user_params)
 
 
-
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
     #@user.pwd = tmpcryp.creatHash @user.pwd
