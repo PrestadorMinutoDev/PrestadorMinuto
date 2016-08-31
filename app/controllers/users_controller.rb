@@ -36,8 +36,19 @@ class UsersController < ApplicationController
   # POST /register_user/create
   def create_register_user
 
+
     @user = User.new(register_user_params)
 
+    if @user.phones.length > 0
+      @user.phones.each do |p|
+
+         @user.phones.clear
+         @user.phones << Phone.find_or_create_by(number: p.number)
+
+
+         #@user.phones.create pt
+      end
+    end
 
 
     #@user.slt = tmpcryp.get_cipher_salt
