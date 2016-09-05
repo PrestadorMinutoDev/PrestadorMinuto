@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @user.phones.build
+
   end
 
   # GET /users/1/edit
@@ -30,14 +31,18 @@ class UsersController < ApplicationController
   # GET /register_user/new
   def register_user
     @user = User.new
+    @user.build_address
     @user.phones.build
+
   end
 
   # POST /register_user/create
   def create_register_user
 
-    @user = User.new(register_user_params)
+   @user = User.new(register_user_params)
 
+
+    clonePhone(@user.phones)
 
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
@@ -81,7 +86,7 @@ class UsersController < ApplicationController
     @user.pwd = tmpcryp.creatHash @user.pwd
     @user.mobile = nil
 
-    @user.save
+    @usnumberer.save
     ##Criando o User_phone
     @user_phone = UserPhone.new
     @user_phone.user_id = @user.id
@@ -144,6 +149,18 @@ class UsersController < ApplicationController
     end
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation,
-                                  phones_attributes: [:number,:haswp])
+                                phones_attributes: [:number,:haswp],
+                                address_attributes: [:zip, :address1, :address2, :address3, :city_id, :state_id, :country_id])
+  end
+
+
+  ## Set a exist phone or create if isn't exist.
+  def clonePhone(param)
+      if param.length > 0
+          param.each do |p|
+            param.clear
+            param << Phone.find_or_create_by(number: p.number)
+          end
+     end
   end
 end

@@ -1,3 +1,3 @@
 class Country < ActiveRecord::Base
-  has_one :address
+  has_many :address
 end
