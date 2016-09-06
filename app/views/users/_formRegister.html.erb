@@ -67,7 +67,7 @@
     <%= f.fields_for :address do |address| %>
         <div>
           <%= address.label :zip %>
-          <%= address.text_field :zip,class: 'form-control' %><br>
+          <%= address.text_field :zip %><br>
 
           <%= address.label :address1 %>
           <%= address.text_field :address1 %><br>
@@ -79,13 +79,13 @@
           <%= address.text_field :address3 %><br>
 
           <%= address.label :city %>
-          <%= address.text_field :city %><br>
+          <%= address.text_field :city_id %><br>
 
           <%= address.label :state %>
-          <%= address.text_field :state %><br>
+          <%= address.text_field :state_id %><br>
 
           <%= address.label :country %>
-          <%= address.text_field :country %><br>
+          <%= address.text_field :country_id %><br>
         </div>
     <% end %>
 

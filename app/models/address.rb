@@ -3,7 +3,6 @@ class Address < ActiveRecord::Base
   belongs_to :state
   belongs_to :country
 
-  has_one :city
-  has_one :state
-  has_one :country
+
+  has_many :users
 end

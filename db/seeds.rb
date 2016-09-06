@@ -7,3 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 operators = Operator.create([{ name: 'Default' }, { name: 'Tim' }])
+cities = City.create([{ name: 'Belo Horizonte' }])
+countries = Country.create([{ name: 'Brazil' }])
+states = State.create([{ name: 'MG' }])

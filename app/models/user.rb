@@ -1,12 +1,16 @@
 class User < ActiveRecord::Base
 
+  belongs_to :address
+
   #has_many :accounts
   has_many :user_phones
-  has_many :phones,-> { distinct },:through => :user_phones
-  has_one :address
+  has_many :phones,:through => :user_phones
+
 
 
   accepts_nested_attributes_for :phones
+  accepts_nested_attributes_for :address
+
   validates :pwd, confirmation: true
   validates_presence_of :doc,:email,:name,:pwd
 
