@@ -148,7 +148,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :mobile, :doc, :birthdate, :email, :last_logon, :certdate)
     end
   def register_user_params
-    params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation,
+    params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
                                 address_attributes: [:zip, :address1, :address2, :address3, :city_id, :state_id, :country_id])
   end

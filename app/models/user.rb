@@ -34,4 +34,7 @@ class User < ActiveRecord::Base
   end
 
 
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "10x10>" }, default_url: "/assets/nobody_default.jpg"
+  validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+
 end

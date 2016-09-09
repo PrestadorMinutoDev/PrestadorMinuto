@@ -1,4 +1,4 @@
-<%= form_for @user,:url =>{:action => 'create_register_user'} do |f| %>
+<%= form_for @user,:url =>{:action => 'create_register_user'},  html: { multipart: true } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -93,6 +93,10 @@
 
     <!-- End ADDRESS model -->
 
+    <div class="field">
+      <%= f.label :avatar %><br>
+      <%= f.file_field :avatar %>
+    </div>
 
 
   <div class="actions">
