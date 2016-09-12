@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def create_register_user
 
    @user = User.new(register_user_params)
-
+   @user.last_logon = Time.now
 
     clonePhone(@user.phones)
 
