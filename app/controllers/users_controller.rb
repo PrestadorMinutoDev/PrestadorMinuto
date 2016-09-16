@@ -45,7 +45,6 @@ class UsersController < ApplicationController
 
    clonePhone(@user.phones)
 
-
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
     #@user.pwd = tmpcryp.creatHash @user.pwd
