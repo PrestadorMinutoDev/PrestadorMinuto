@@ -31,7 +31,13 @@
   <%= @user.certdate %>
 </p>
 
+
+<p>
+  <strong>Phone:</strong>
+  <%= @user.phones[0].number %>
+</p>
+
 <%= image_tag @user.avatar.url(:original) %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', register_users_path %>
+<%= link_to 'Edit', edit_register_user_path(@user) %> |
+<%= link_to 'Back', registerUser_path %>

@@ -1,4 +1,4 @@
-<%= form_for @user,:url =>{:action => 'create_register_user'},  html: { multipart: true } do |f| %>
+<%= form_for @user,:url =>{controller: "users",:action => 'create_register_user'}, :method => "post", html: { multipart: true } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -66,17 +66,17 @@
 
     <%= f.fields_for :address do |address| %>
         <div>
-          <%= address.label :zip %>
-          <%= address.text_field :zip %><br>
+          <%= address.label :number %>
+          <%= address.text_field :number %><br>
 
-          <%= address.label :address1 %>
-          <%= address.text_field :address1 %><br>
+          <%= address.label :complement %>
+          <%= address.text_field :complement %><br>
 
-          <%= address.label :address2 %>
-          <%= address.text_field :address2 %><br>
+          <%= address.label :geolocation %>
+          <%= address.text_field :geolocation %><br>
 
-          <%= address.label :address3 %>
-          <%= address.text_field :address3 %><br>
+          <%= address.label :postal_code_id %>
+          <%= address.text_field :postal_code_id %><br>
 
           <%= address.label :city %>
           <%= address.text_field :city_id %><br>

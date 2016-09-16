@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906192036) do
+ActiveRecord::Schema.define(version: 20160912175760) do
 
   create_table "account_kinds", force: :cascade do |t|
     t.string   "name",       limit: 55
@@ -52,20 +52,23 @@ ActiveRecord::Schema.define(version: 20160906192036) do
   add_index "ad_images", ["image_id"], name: "index_ad_images_on_image_id", using: :btree
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "zip",        limit: 8
-    t.string   "address1",   limit: 255
-    t.string   "address2",   limit: 255
-    t.string   "address3",   limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "city_id",    limit: 4
-    t.integer  "state_id",   limit: 4
-    t.integer  "country_id", limit: 4
+    t.string   "complement",     limit: 255
+    t.integer  "number",         limit: 4
+    t.string   "geolocation",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "city_id",        limit: 4
+    t.integer  "state_id",       limit: 4
+    t.integer  "country_id",     limit: 4
+    t.integer  "street_id",      limit: 4
+    t.integer  "postal_code_id", limit: 4
   end
 
   add_index "addresses", ["city_id"], name: "index_addresses_on_city_id", using: :btree
   add_index "addresses", ["country_id"], name: "index_addresses_on_country_id", using: :btree
+  add_index "addresses", ["postal_code_id"], name: "index_addresses_on_postal_code_id", using: :btree
   add_index "addresses", ["state_id"], name: "index_addresses_on_state_id", using: :btree
+  add_index "addresses", ["street_id"], name: "index_addresses_on_street_id", using: :btree
 
   create_table "ads", force: :cascade do |t|
     t.text     "description",     limit: 65535
@@ -116,6 +119,12 @@ ActiveRecord::Schema.define(version: 20160906192036) do
 
   add_index "phones", ["operator_id"], name: "index_phones_on_operator_id", using: :btree
 
+  create_table "postal_codes", force: :cascade do |t|
+    t.integer  "zip_number", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "professions", force: :cascade do |t|
     t.string   "name_m",     limit: 75
     t.string   "name_f",     limit: 75
@@ -148,6 +157,13 @@ ActiveRecord::Schema.define(version: 20160906192036) do
     t.string   "name",       limit: 2
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "streets", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "number",     limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "user_phones", force: :cascade do |t|
@@ -190,7 +206,9 @@ ActiveRecord::Schema.define(version: 20160906192036) do
   add_foreign_key "ad_images", "images"
   add_foreign_key "addresses", "cities"
   add_foreign_key "addresses", "countries"
+  add_foreign_key "addresses", "postal_codes"
   add_foreign_key "addresses", "states"
+  add_foreign_key "addresses", "streets"
   add_foreign_key "ads", "professions"
   add_foreign_key "ads", "professions", column: "profession_id_1"
   add_foreign_key "phones", "operators"

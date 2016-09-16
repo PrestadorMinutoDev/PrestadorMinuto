@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   get 'registerUser', to: 'users#register_user'
   post 'registerUser', to: 'users#create_register_user'
+  get 'register_users', to: 'users#index_register_users'
+
+  get 'show_register_user/:id', to: 'users#show_register_users', as: 'show_register_user'
+  get 'edit_register_user/:id/edit', to: 'users#editRegister_User', as: 'edit_register_user'
+
+
 
 
   get 'admin/index'
@@ -25,7 +31,6 @@ Rails.application.routes.draw do
   resources :phones
   resources :operators
   resources :professions
-  resources :register_users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

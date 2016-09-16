@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
 
 
+
   # GET /register_user/new
   def register_user
     @user = User.new
@@ -42,7 +43,8 @@ class UsersController < ApplicationController
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
 
-    clonePhone(@user.phones)
+   clonePhone(@user.phones)
+
 
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
@@ -66,6 +68,29 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
+
+  def show_register_users
+
+    tmpcryp =::Decrypter.new
+    @user = User.find(params[:id])
+    @phone = Phone.find(params[:id])
+    @address = Address.find(params[:id])
+    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
+
+
+  end
+
+  def editRegister_User
+    @user = User.find(params[:id])
+  end
+
+
+  def index_register_users
+      @users = User.all
+      @phones = Phone.all
+      @addresses = Address.all
+  end
+
   def create
 
     puts "Entrou no Users"
@@ -150,7 +175,7 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:zip, :address1, :address2, :address3, :city_id, :state_id, :country_id])
+                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id, :postal_code_id])
   end
 
 
