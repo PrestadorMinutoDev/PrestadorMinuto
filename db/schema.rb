@@ -57,11 +57,11 @@ ActiveRecord::Schema.define(version: 20160912175760) do
     t.string   "geolocation",    limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "city_id",        limit: 4
-    t.integer  "state_id",       limit: 4
-    t.integer  "country_id",     limit: 4
-    t.integer  "street_id",      limit: 4
-    t.integer  "postal_code_id", limit: 4
+    t.integer  "city_id",        limit: 4,   null: false
+    t.integer  "state_id",       limit: 4,   null: false
+    t.integer  "country_id",     limit: 4,   null: false
+    t.integer  "street_id",      limit: 4,   null: false
+    t.integer  "postal_code_id", limit: 4,   null: false
   end
 
   add_index "addresses", ["city_id"], name: "index_addresses_on_city_id", using: :btree

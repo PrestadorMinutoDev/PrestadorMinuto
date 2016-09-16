@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'register_users', to: 'users#index_register_users'
 
   get 'show_register_user/:id', to: 'users#show_register_users', as: 'show_register_user'
-  get 'edit_register_user/:id/edit', to: 'users#editRegister_User', as: 'edit_register_user'
+  get 'edit_register_user/:id/edit', to: 'users#edit_register_user', as: 'edit_register_user'
 
 
 

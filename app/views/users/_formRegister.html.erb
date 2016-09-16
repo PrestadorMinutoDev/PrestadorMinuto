@@ -66,10 +66,14 @@
 
           <%= address.label :complement %>
           <%= address.text_field :complement %><br>
-
-          <%= address.label :zip_number  %>
-          <%= address.text_field :zip_number %><br>
-
+          <%= address.fields_for :postal_code do |zips| %>
+            <%= zips.label :zip_number  %>
+            <%= zips.text_field :zip_number %><br>
+          <% end %>
+          <%= address.fields_for :street do |str| %>
+              <%= str.label :name  %>
+              <%= str.text_field :name %><br>
+          <% end %>
           <%= address.label :city %>
           <%= address.text_field :city_id %><br>
 

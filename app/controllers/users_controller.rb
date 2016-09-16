@@ -34,6 +34,8 @@ class UsersController < ApplicationController
     @user = User.new
     @user.build_address
     @user.phones.build
+    @user.address.build_postal_code
+    @user.address.build_street
 
   end
 
@@ -43,7 +45,12 @@ class UsersController < ApplicationController
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
 
-   clonePhone(@user.phones)
+   clone_phone(@user.phones)
+
+   @user.address.street = check_street(@user.address.street)
+   @user.address.postal_code = check_postal_code(@user.address.postal_code)
+   puts 'My street id:'
+   puts @user.address.street.id
 
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
@@ -79,7 +86,7 @@ class UsersController < ApplicationController
 
   end
 
-  def editRegister_User
+  def edit_register_user
     @user = User.find(params[:id])
   end
 
@@ -90,52 +97,7 @@ class UsersController < ApplicationController
       @addresses = Address.all
   end
 
-  def create
 
-    puts "Entrou no Users"
-    tmpcryp =::Decrypter.new
-    @user = User.new(user_params)
-
-    ##Criando o Operador
-    @operator = Operator.find(1)
-
-    ##Criando o Phone
-    @phone = Phone.new
-    #@phone.number = @user.mobile
-    @phone = Phone.find_or_create_by(number: @user.mobile)
-    @phone.operator_id = @operator.id
-    @phone.save
-    @user.slt = tmpcryp.get_cipher_salt
-    @user.doc = tmpcryp.encrypt @user.doc, @user.slt
-    @user.pwd = tmpcryp.creatHash @user.pwd
-    @user.mobile = nil
-
-    @usnumberer.save
-    ##Criando o User_phone
-    @user_phone = UserPhone.new
-    @user_phone.user_id = @user.id
-    @user_phone.phone_id = @phone.id
-    @user_phone.save
-
-    ##Insert User
-    @user.mobile = @user_phone.id
-    @user.last_logon = Time.now
-    @user.save
-
-
-
-
-    respond_to do |format|
-      if @user.save
-
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
@@ -174,19 +136,29 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id,postal_code_attributes: [:zip_number]],
+                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id,
+                                                     postal_code_attributes: [:id,:zip_number],street_attributes: [:id,:name]],
 
                                 street_attributes: [:name])
   end
 
 
   ## Set a exist phone or create if isn't exist.
-  def clonePhone(param)
+  def clone_phone(param)
       if param.length > 0
           param.each do |p|
             param.clear
             param << Phone.find_or_create_by(number: p.number)
           end
      end
+  end
+
+  ## Set a existing street or create if doesn't exist.
+  def check_street(temp_street)
+    Street.find_or_create_by(name: temp_street.name)
+  end
+
+  def check_postal_code(temp_pc)
+    PostalCode.find_or_create_by(zip_number: temp_pc.zip_number)
   end
 end
