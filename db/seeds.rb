@@ -9,5 +9,5 @@
 operators = Operator.create([{ name: 'Default' }, { name: 'Tim' }])
 cities = City.create([{ name: 'Belo Horizonte' }])
 countries = Country.create([{ name: 'Brazil' }])
-states = State.create([{ name: 'MG' }])
+states = State.create([{ name: 'SP' },{ name: 'RJ' },{ name: 'MG' } ])
 postalcode = PostalCode.create([{ zip_number: '30840000' }])
