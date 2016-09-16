@@ -174,7 +174,9 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id, :postal_code_id])
+                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id,postal_code_attributes: [:zip_number]],
+
+                                street_attributes: [:name])
   end
 
 

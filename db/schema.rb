@@ -161,7 +161,6 @@ ActiveRecord::Schema.define(version: 20160912175760) do
 
   create_table "streets", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.integer  "number",     limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
