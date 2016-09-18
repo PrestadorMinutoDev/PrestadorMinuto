@@ -67,15 +67,17 @@
           <%= address.label :complement %>
           <%= address.text_field :complement %><br>
           <%= address.fields_for :postal_code do |zips| %>
-            <%= zips.label :zip_number  %>
+            <%= zips.label :zip_number, 'CEP'  %>
             <%= zips.text_field :zip_number %><br>
           <% end %>
           <%= address.fields_for :street do |str| %>
-              <%= str.label :name  %>
+              <%= str.label :name,'Logadouro'  %>
               <%= str.text_field :name %><br>
           <% end %>
-          <%= address.label :city %>
-          <%= address.text_field :city_id %><br>
+          <%= address.fields_for :city do |cit| %>
+              <%= cit.label :name, 'Cidade' %>
+              <%= cit.text_field :name %><br>
+          <% end %>
 
           <%= address.label :state %>
           <%= address.collection_select :state_id, State.order(:name),:id,:name%><br>

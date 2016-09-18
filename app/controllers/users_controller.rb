@@ -11,9 +11,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    tmpcryp =::Decrypter.new
+
     @user = User.find(params[:id])
-    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
+
   end
 
   # GET /users/new
@@ -36,6 +36,7 @@ class UsersController < ApplicationController
     @user.phones.build
     @user.address.build_postal_code
     @user.address.build_street
+    @user.address.build_city
 
   end
 
@@ -44,18 +45,6 @@ class UsersController < ApplicationController
 
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
-
-   clone_phone(@user.phones)
-
-   @user.address.street = check_street(@user.address.street)
-   @user.address.postal_code = check_postal_code(@user.address.postal_code)
-   puts 'My street id:'
-   puts @user.address.street.id
-
-    #@user.slt = tmpcryp.get_cipher_salt
-    #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
-    #@user.pwd = tmpcryp.creatHash @user.pwd
-    #@user.save
 
 
     respond_to do |format|
@@ -77,11 +66,11 @@ class UsersController < ApplicationController
 
   def show_register_users
 
-    tmpcryp =::Decrypter.new
+
     @user = User.find(params[:id])
     @phone = Phone.find(params[:id])
     @address = Address.find(params[:id])
-    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
+
 
 
   end
@@ -136,29 +125,10 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id,
-                                                     postal_code_attributes: [:id,:zip_number],street_attributes: [:id,:name]],
-
-                                street_attributes: [:name])
+                                address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,
+                                                      postal_code_attributes: [:zip_number],street_attributes: [:name],
+                                                      city_attributes: [:name]])
   end
 
 
-  ## Set a exist phone or create if isn't exist.
-  def clone_phone(param)
-      if param.length > 0
-          param.each do |p|
-            param.clear
-            param << Phone.find_or_create_by(number: p.number)
-          end
-     end
-  end
-
-  ## Set a existing street or create if doesn't exist.
-  def check_street(temp_street)
-    Street.find_or_create_by(name: temp_street.name)
-  end
-
-  def check_postal_code(temp_pc)
-    PostalCode.find_or_create_by(zip_number: temp_pc.zip_number)
-  end
 end
