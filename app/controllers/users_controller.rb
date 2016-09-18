@@ -20,7 +20,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @user.phones.build
-
   end
 
   # GET /users/1/edit
@@ -34,6 +33,8 @@ class UsersController < ApplicationController
     @user = User.new
     @user.build_address
     @user.phones.build
+    @user.address.build_postal_code
+    @user.address.build_street
 
   end
 
@@ -43,7 +44,9 @@ class UsersController < ApplicationController
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
 
-   clonePhone(@user.phones)
+   clone_phone(@user.phones)
+
+
 
     #@user.slt = tmpcryp.get_cipher_salt
     #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
@@ -92,37 +95,7 @@ class UsersController < ApplicationController
 
   def create
 
-    puts "Entrou no Users"
-    tmpcryp =::Decrypter.new
-    @user = User.new(user_params)
-
-    ##Criando o Operador
-    @operator = Operator.find(1)
-
-    ##Criando o Phone
-    @phone = Phone.new
-    #@phone.number = @user.mobile
-    @phone = Phone.find_or_create_by(number: @user.mobile)
-    @phone.operator_id = @operator.id
-    @phone.save
-    @user.slt = tmpcryp.get_cipher_salt
-    @user.doc = tmpcryp.encrypt @user.doc, @user.slt
-    @user.pwd = tmpcryp.creatHash @user.pwd
-    @user.mobile = nil
-
-    @usnumberer.save
-    ##Criando o User_phone
-    @user_phone = UserPhone.new
-    @user_phone.user_id = @user.id
-    @user_phone.phone_id = @phone.id
-    @user_phone.save
-
-    ##Insert User
-    @user.mobile = @user_phone.id
-    @user.last_logon = Time.now
-    @user.save
-
-
+    @user = User.new(register_user_params)
 
 
     respond_to do |format|
@@ -174,12 +147,13 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id, :country_id, :postal_code_id])
+                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id,:country_id,
+                                postal_code_attributes: [:zip_number],street_attributes: [:name]])
   end
 
 
   ## Set a exist phone or create if isn't exist.
-  def clonePhone(param)
+  def clone_phone(param)
       if param.length > 0
           param.each do |p|
             param.clear

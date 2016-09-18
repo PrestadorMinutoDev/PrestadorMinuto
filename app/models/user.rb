@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :phones
   accepts_nested_attributes_for :address
 
+
   validates :pwd, confirmation: true
   validates_presence_of :doc,:email,:name,:pwd
 

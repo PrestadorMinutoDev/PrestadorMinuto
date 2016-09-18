@@ -53,11 +53,6 @@
       <%= f.label :email %><br>
       <%= f.text_field :email %>
     </div>
-    <div class="field">
-      <%= f.label :certdate %><br>
-      <%= f.date_select :certdate %>
-    </div>
-
 
     <!-- End USER model -->
 
@@ -72,22 +67,34 @@
           <%= address.label :complement %>
           <%= address.text_field :complement %><br>
 
-          <%= address.label :geolocation %>
-          <%= address.text_field :geolocation %><br>
+          <%= address.fields_for :postal_code do |postal_code| %>
 
-          <%= address.label :postal_code_id %>
-          <%= address.text_field :postal_code_id %><br>
+                <%= postal_code.label :zip_number  %>
+                <%= postal_code.text_field :zip_number %><br>
 
-          <%= address.label :state %>
-          <%= address.collection_select :state_id, State.order(:name), :id, :name , prompt: true %><br>
+          <% end %>
+
+          <%= address.fields_for :street do |street| %>
+
+              <%= street.label :name  %>
+              <%= street.text_field :name %><br>
+
+          <% end %>
 
           <%= address.label :city %>
           <%= address.text_field :city_id %><br>
 
+          <%= address.label :state %>
+          <%= address.collection_select :state_id, State.order(:name),:id,:name%><br>
           <%= address.label :country %>
-          <%= address.text_field :country_id %><br>
+          <%= address.collection_select :country_id, Country.order(:name),:id,:name%><br>
         </div>
     <% end %>
+
+
+
+
+
 
 
     <!-- End ADDRESS model -->

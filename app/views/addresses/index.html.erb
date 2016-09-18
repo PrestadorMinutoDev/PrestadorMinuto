@@ -5,10 +5,9 @@
 <table>
   <thead>
     <tr>
-      <th>Zip</th>
-      <th>Address1</th>
-      <th>Address2</th>
-      <th>Address3</th>
+      <th>Number</th>
+      <th>Geolocation</th>
+      <th>Postal_Code_ID</th>
       <th>City</th>
       <th>State</th>
       <th>Country</th>
@@ -19,10 +18,9 @@
   <tbody>
     <% @addresses.each do |address| %>
       <tr>
-        <td><%= address.zip %></td>
-        <td><%= address.address1 %></td>
-        <td><%= address.address2 %></td>
-        <td><%= address.address3 %></td>
+        <td><%= address.number %></td>
+        <td><%= address.geolocation %></td>
+        <td><%= address.postal_code_id %></td>
         <td><%= address.city_id %></td>
         <td><%= address.state_id %></td>
         <td><%= address.country_id %></td>

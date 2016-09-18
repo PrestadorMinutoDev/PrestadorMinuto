@@ -1,3 +1,3 @@
 class City < ActiveRecord::Base
-  has_many :address
+  belongs_to :address
 end
