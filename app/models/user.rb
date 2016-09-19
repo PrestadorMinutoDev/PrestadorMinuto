@@ -47,9 +47,6 @@ end
 
   def check_my_stuff
 
-      self.address.city = City.find_or_create_by(name: self.address.city.name)
-      self.address.street = Street.find_or_create_by(name: self.address.street.name)
-      self.address.postal_code = PostalCode.find_or_create_by(zip_number: self.address.postal_code.zip_number)
       if self.phones.length > 0
         myp = Array.new
         self.phones.each do |p|
