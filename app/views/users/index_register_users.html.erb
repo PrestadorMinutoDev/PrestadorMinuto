@@ -30,9 +30,17 @@
         <td><%= user.email %></td>
         <td><%= user.last_logon %></td>
         <td><%= user.certdate %></td>
-        <td><%= user.phones[0].number %></td>
-        <td><%= user.address.country %></td>
-        <td><%= user.address.state %></td>
+        <% if user.phones.length == 0 %>
+            <td>Not found! </td>
+        <% else %>
+            <% user.phones.each do |phone| %>
+                <td><%= phone.number %></td>
+                <% break %>
+            <% end %>
+
+        <% end %>
+        <td><%= user.address.country.name %></td>
+        <td><%= user.address.state.name %></td>
         <td><%= link_to 'Show', user %></td>
         <!-- ##edit_user_path(user) !-->
         <td><%= link_to 'Edit', edit_register_user_path(user) %></td>
