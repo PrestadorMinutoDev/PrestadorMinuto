@@ -1,3 +1,4 @@
 class City < ActiveRecord::Base
-  belongs_to :address
+  has_many :addresses
+  validates :name, uniqueness: true, on: :create
 end

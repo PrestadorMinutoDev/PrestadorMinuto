@@ -11,15 +11,16 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    tmpcryp =::Decrypter.new
+
     @user = User.find(params[:id])
-    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
+
   end
 
   # GET /users/new
   def new
     @user = User.new
     @user.phones.build
+
   end
 
   # GET /users/1/edit
@@ -35,6 +36,7 @@ class UsersController < ApplicationController
     @user.phones.build
     @user.address.build_postal_code
     @user.address.build_street
+    @user.address.build_city
 
   end
 
@@ -43,15 +45,6 @@ class UsersController < ApplicationController
 
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
-
-   clone_phone(@user.phones)
-
-
-
-    #@user.slt = tmpcryp.get_cipher_salt
-    #@user.doc = tmpcryp.encrypt @user.doc, @user.slt
-    #@user.pwd = tmpcryp.creatHash @user.pwd
-    #@user.save
 
 
     respond_to do |format|
@@ -73,16 +66,16 @@ class UsersController < ApplicationController
 
   def show_register_users
 
-    tmpcryp =::Decrypter.new
+
     @user = User.find(params[:id])
     @phone = Phone.find(params[:id])
     @address = Address.find(params[:id])
-    @user.doc =  tmpcryp.decrypt @user.doc, @user.slt
+
 
 
   end
 
-  def editRegister_User
+  def edit_register_user
     @user = User.find(params[:id])
   end
 
@@ -93,22 +86,7 @@ class UsersController < ApplicationController
       @addresses = Address.all
   end
 
-  def create
 
-    @user = User.new(register_user_params)
-
-
-    respond_to do |format|
-      if @user.save
-
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
@@ -147,18 +125,10 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                 phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :city_id, :state_id,:country_id,
-                                postal_code_attributes: [:zip_number],street_attributes: [:name]])
+                                address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,
+                                                      postal_code_attributes: [:zip_number],street_attributes: [:name],
+                                                      city_attributes: [:name]])
   end
 
 
-  ## Set a exist phone or create if isn't exist.
-  def clone_phone(param)
-      if param.length > 0
-          param.each do |p|
-            param.clear
-            param << Phone.find_or_create_by(number: p.number)
-          end
-     end
-  end
 end

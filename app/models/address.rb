@@ -7,6 +7,9 @@ class Address < ActiveRecord::Base
 
   accepts_nested_attributes_for :postal_code
   accepts_nested_attributes_for :street
+  accepts_nested_attributes_for :city
 
   has_many :users
+
+
 end

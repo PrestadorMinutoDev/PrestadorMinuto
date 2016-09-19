@@ -12,10 +12,14 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
 
+  EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+  validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
+  validates :doc, :presence => true, :uniqueness => true, :length => 11
   validates :pwd, confirmation: true
-  validates_presence_of :doc,:email,:name,:pwd
-
+  validates_presence_of :name,:pwd
+  before_validation 'check_my_stuff'
   before_save 'encrypt_my_data','hash_my_pass'
+  after_find  'decrypt_my_data'
 
 
 
@@ -25,6 +29,27 @@ class User < ActiveRecord::Base
       self.slt = tmpcryp.get_cipher_salt
       self.doc = tmpcryp.encrypt self.doc, self.slt
     end
+  end
+
+  def decrypt_my_data
+    tmpcryp = Decrypter.new
+    if doc.present?
+      self.doc = tmpcryp.decrypt self.doc, self.slt
+    end
+  end
+
+  def check_my_stuff
+
+      self.address.city = City.find_or_create_by(name: self.address.city.name)
+      self.address.street = Street.find_or_create_by(name: self.address.street.name)
+      self.address.postal_code = PostalCode.find_or_create_by(zip_number: self.address.postal_code.zip_number)
+      if self.phones.length > 0
+        myp = Array.new
+        self.phones.each do |p|
+          myp.insert Phone.find_or_create_by(number: p.number)
+        end
+        self.phones = myp
+      end
   end
 
   def hash_my_pass

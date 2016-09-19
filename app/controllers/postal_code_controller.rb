@@ -1,37 +1,47 @@
 class PostalCodeController < ApplicationController
-  before_action :set_postal_code, only: [:show, :edit, :update, :destroy]
 
-
-  def new
-    @postalcode = PostalCode.new
+  def show
   end
 
+  # GET /phones/new
+  def new
+    @postal_code = PostalCode.new
+  end
+
+  # GET /phones/1/edit
+  def edit
+  end
+
+  # POST /phones
+  # POST /phones.json
   def create
-
-    @postalcode = PostalCode.new(postal_code_params)
-
+    @postal_code = PostalCode.new(postal_code_params)
 
     respond_to do |format|
-      if @postalcode.save
-        #redirect_to action: 'show', id:@user.id
-        format.html { redirect_to @postalcode, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @postalcode }
+      if @postal_code.save
+        format.html { redirect_to @postal_code, notice: 'Phone was successfully created.' }
+        format.json { render :show, status: :created, location: @postal_code }
       else
-        format.html { render :register_user }
-        format.json { render json: @postalcode.errors, status: :unprocessable_entity }
+        format.html { render :new }
+        format.json { render json: @postal_code.errors, status: :unprocessable_entity }
       end
     end
-
-
   end
 
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @postalcode = PostalCode.find(params[:id])
+  # PATCH/PUT /phones/1
+  # PATCH/PUT /phones/1.json
+  def update
+    respond_to do |format|
+      if @postal_code.update(phone_params)
+        format.html { redirect_to @postal_code, notice: 'Phone was successfully updated.' }
+        format.json { render :show, status: :ok, location: @postal_code }
+      else
+        format.html { render :edit }
+        format.json { render json: @postal_code.errors, status: :unprocessable_entity }
+      end
+    end
   end
-
   def postal_code_params
-    params.require(:postal_code).permit(:zip_number)
+    params.require(:postal_code).permit(:id,:number)
   end
 end

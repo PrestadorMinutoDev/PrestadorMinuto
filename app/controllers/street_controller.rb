@@ -1,29 +1,31 @@
 class StreetController < ApplicationController
-  before_action :set_street, only: [:show, :edit, :update, :destroy]
 
+  def show
+  end
 
   def new
     @street = Street.new
   end
 
+  def edit
+  end
+
+  # POST /phones
+  # POST /phones.json
   def create
-
-    @street = Street.new(street_param)
-
+    @street = Street.new(street_params)
 
     respond_to do |format|
       if @street.save
-        #redirect_to action: 'show', id:@user.id
-        format.html { redirect_to @street, notice: 'User was successfully created.' }
+        format.html { redirect_to @street, notice: 'Phone was successfully created.' }
         format.json { render :show, status: :created, location: @street }
       else
-        format.html { render :register_user }
+        format.html { render :new }
         format.json { render json: @street.errors, status: :unprocessable_entity }
       end
     end
-
-
   end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -31,7 +33,8 @@ class StreetController < ApplicationController
     @street = Street.find(params[:id])
   end
 
-  def street_param
-    params.require(:street).permit(:name)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def street_params
+    params.require(:street).permit(:id,:name)
   end
 end
