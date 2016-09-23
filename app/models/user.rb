@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   #validates :doc, :presence => true, :uniqueness => true, :length => 11
   validates :pwd, confirmation: true
   validates_presence_of :name,:pwd
+  before_validation 'check_phones'
   before_save 'encrypt_my_data','hash_my_pass'
   after_find  'decrypt_my_data'
 
@@ -45,6 +46,32 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def check_phones
+    temp_phone = Array.new
+    temp_uphones = Array.new
+    self.phones.each do |f|
+      if f.id.nil?
+        if (p = Phone.find_by(number: f.number)).nil?
+          temp_phone << Phone.new(number: f.number)
+        else
+          temp_phone << p
+        end
+      else
+        if f.number != Phone.find(f.id).number
+
+          if (p = Phone.find_by(number: f.number)).nil?
+            temp_phone << Phone.new(number: f.number)
+          else
+            temp_phone << p
+
+          end
+        end
+      end
+    end
+    self.phones = temp_phone
+
+  end
 
   has_attached_file :avatar, styles: { original: "128x128>" },
                     default_url: "/assets/nobody_default.jpg",

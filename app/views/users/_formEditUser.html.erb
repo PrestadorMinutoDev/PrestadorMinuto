@@ -1,4 +1,4 @@
-<%= form_for @user,:url =>{controller: "users",:action => 'create_register_user'}, :method => "post", html: { multipart: true } do |f| %>
+<%= form_for @user,:url =>{controller: "users",:action => 'update'}, :method => "put", html: { multipart: true } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -31,6 +31,8 @@
     <!-- Begin Phones model -->
     <%= f.fields_for :phones do |phones| %>
         <div>
+          <%= f.hidden_field :id%>
+
           <%= phones.label :number %>
           <%= phones.text_field :number %><br>
 
