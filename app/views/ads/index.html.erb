@@ -7,9 +7,7 @@
     <tr>
       <th>Description</th>
       <th>Rating avg</th>
-      <th>Adscol</th>
-      <th>Profession id</th>
-      <th>Profession id 1</th>
+      <th>Profession</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,9 +17,7 @@
       <tr>
         <td><%= ad.description %></td>
         <td><%= ad.rating_avg %></td>
-        <td><%= ad.adscol %></td>
-        <td><%= ad.profession_id %></td>
-        <td><%= ad.profession_id_1 %></td>
+        <td><%= ad.profession.name_m %></td>
         <td><%= link_to 'Show', ad %></td>
         <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
         <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>

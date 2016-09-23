@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'show_register_user/:id', to: 'users#show_register_users', as: 'show_register_user'
   get 'edit_register_user/:id/edit', to: 'users#edit_register_user', as: 'edit_register_user'
+  put 'update_register_user/:id', to: 'users#update_register_user', as: 'update_register_user'
 
 
 

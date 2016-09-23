@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
 
+  ## Só é utilizado belongs_to quando a classe tem foreign_key
   belongs_to :address
 
-  #has_many :accounts
+  has_many :ads
+  has_one :account
   has_many :user_phones
   has_many :phones,:through => :user_phones
 
@@ -12,23 +14,19 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
 
+
+
   #EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
   #validates :doc, :presence => true, :uniqueness => true, :length => 11
   validates :pwd, confirmation: true
-  validate :validate_phones
+
   validates_presence_of :name,:pwd
   before_validation 'check_my_stuff'
   before_save 'encrypt_my_data','hash_my_pass'
   after_find  'decrypt_my_data'
 
-  def validate_phones
-  self.phones.each do |r|
-    if self.phones.find_by(r.number).length > 1
-      errors.add 'Trying to save duplicated phones!'
-    end
-  end
-end
+
 
   def encrypt_my_data
     tmpcryp = Decrypter.new
@@ -51,19 +49,29 @@ end
       self.address.street = Street.find_or_create_by(name: self.address.street.name)
       self.address.postal_code = PostalCode.find_or_create_by(zip_number: self.address.postal_code.zip_number)
       if self.phones.length > 0
-        myp = Array.new
-        self.phones.each do |p|
-          tmp = Phone.find_by(number: p.number)
-          if tmp.nil?
-            myp << p
-          else
-            myp << tmp
+        puts "oi"
+        if self.phones.uniq.length == self.phones.length
+          #self.user_phones.destroy_all
+          myp = Array.new
+          self.phones.each do |p|
+            tmp = Phone.find_by(number: p.number)
+            puts 'my_id:'
+            puts p.id
+            if tmp.nil?
+              myp << p
+            else
+              myp << tmp
+            end
           end
-
+          self.phones = myp
+        else
+          errors.add :phones, 'Duplicated phones found'
         end
-        self.phones = myp
       end
+
+
   end
+
 
   def hash_my_pass
     tmpcryp = Decrypter.new

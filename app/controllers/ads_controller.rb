@@ -15,6 +15,8 @@ class AdsController < ApplicationController
   # GET /ads/new
   def new
     @ad = Ad.new
+    @ad.build_profession
+    @ad.build_user
   end
 
   # GET /ads/1/edit
@@ -24,7 +26,11 @@ class AdsController < ApplicationController
   # POST /ads
   # POST /ads.json
   def create
+
     @ad = Ad.new(ad_params)
+    @profession = Profession.find(params[:profession][:profession_id])
+    @ad.profession = @profession
+
 
     respond_to do |format|
       if @ad.save
@@ -69,6 +75,6 @@ class AdsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ad_params
-      params.require(:ad).permit(:description, :rating_avg, :adscol, :profession_id, :profession_id_1)
+      params.require(:ad).permit(:description, :rating_avg, profession_attributes: [:name_m, :name_f])
     end
 end

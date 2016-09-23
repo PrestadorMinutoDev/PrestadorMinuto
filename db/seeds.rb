@@ -13,3 +13,4 @@ states = State.create([{ name: 'AC' },{ name: 'AL' },{ name: 'AP' },{ name: 'AM'
                        { name: 'GO' },{ name: 'MA' },{ name: 'MT' },{ name: 'MS' },{ name: 'MG' },{ name: 'PA' },{ name: 'PB' },{ name: 'PR' },
                        { name: 'PI' },{ name: 'RJ' },{ name: 'RN' },{ name: 'RS' },{ name: 'RO' },{ name: 'RR' },{ name: 'SC' },{ name: 'SP' },
                        { name: 'SE' },{ name: 'TO' }])
+professions = Profession.create([{ name_m: 'Pintor', name_f: 'Pintora'}, {name_m: 'Pedreiro', name_f: 'Pedreira'}])

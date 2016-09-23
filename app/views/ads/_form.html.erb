@@ -19,17 +19,8 @@
     <%= f.label :rating_avg %><br>
     <%= f.text_field :rating_avg %>
   </div>
-  <div class="field">
-    <%= f.label :adscol %><br>
-    <%= f.text_field :adscol %>
-  </div>
-  <div class="field">
-    <%= f.label :profession %><br>
-    <%= f.number_field :profession_id %>
-  </div>
-  <div class="field">
-    <%= f.label :profession_id %><br>
-    <%= f.number_field :profession_id_1 %>
+  <div>
+      <%= collection_select :profession, :profession_id, Profession.order(:name_m),:id,:name_m%>
   </div>
   <div class="actions">
     <%= f.submit %>

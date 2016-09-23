@@ -76,11 +76,11 @@
           <% end %>
           <%= address.fields_for :city do |cit| %>
               <%= cit.label :name, 'Cidade' %>
-              <%= cit.text_field :name %><br>
+              <%= cit.text_field :name,:value => 'Belo Horizonte', :readonly => true%><br>
           <% end %>
 
           <%= address.label :state %>
-          <%= address.collection_select :state_id, State.order(:name),:id,:name%><br>
+          <%= address.collection_select :state_id, State.order(:name),:id,:name, :selected => @state || 13 %><br>
           <%= address.label :country %>
           <%= address.collection_select :country_id, Country.order(:name),:id,:name%><br>
         </div>
