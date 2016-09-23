@@ -1,0 +1,103 @@
+<%= form_for @user,:url =>{controller: "users",:action => 'create_register_user'}, :method => "post", html: { multipart: true } do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <!-- Begin USER model -->
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :pwd %><br>
+      <%= f.password_field :pwd %>
+    </div>
+
+    <div class="field">
+      <%= f.label :pwd_confirmation %><br>
+      <%= f.password_field :pwd_confirmation %>
+    </div>
+
+    <!-- Begin Phones model -->
+    <%= f.fields_for :phones do |phones| %>
+        <div>
+          <%= phones.label :number %>
+          <%= phones.text_field :number %><br>
+
+          <%= phones.label :haswp %>
+          <%= phones.check_box :haswp %><br>
+        </div>
+    <% end %>
+
+    <!-- End Phones model -->
+
+    <div class="field">
+      <%= f.label :doc %><br>
+      <%= f.text_field :doc %>
+    </div>
+    <div class="field">
+      <%= f.label :birthdate %><br>
+      <%= f.date_select :birthdate %>
+    </div>
+    <div class="field">
+      <%= f.label :email %><br>
+      <%= f.text_field :email %>
+    </div>
+
+    <!-- End USER model -->
+
+
+    <!-- Begin ADDRESS model -->
+
+    <%= f.fields_for :address do |address| %>
+        <div>
+          <%= address.label :number %>
+          <%= address.text_field :number %><br>
+
+          <%= address.label :complement %>
+          <%= address.text_field :complement %><br>
+          <%= address.fields_for :postal_code do |zips| %>
+            <%= zips.label :zip_number, 'CEP'  %>
+            <%= zips.text_field :zip_number %><br>
+          <% end %>
+          <%= address.fields_for :street do |str| %>
+              <%= str.label :name,'Logadouro'  %>
+              <%= str.text_field :name %><br>
+          <% end %>
+          <%= address.fields_for :city do |cit| %>
+              <%= cit.label :name, 'Cidade' %>
+              <%= cit.text_field :name %><br>
+          <% end %>
+
+          <%= address.label :state %>
+          <%= address.collection_select :state_id, State.order(:name),:id,:name%><br>
+          <%= address.label :country %>
+          <%= address.collection_select :country_id, Country.order(:name),:id,:name%><br>
+        </div>
+    <% end %>
+
+
+
+
+    <!-- End ADDRESS model -->
+
+    <div class="field">
+      <%= f.label :avatar %><br>
+      <%= f.file_field :avatar %>
+    </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
