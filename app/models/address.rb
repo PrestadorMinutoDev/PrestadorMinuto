@@ -12,6 +12,41 @@ class Address < ActiveRecord::Base
 
   has_many :users
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   before_validation 'check_city','check_zip_number','check_street'
 
   def check_city

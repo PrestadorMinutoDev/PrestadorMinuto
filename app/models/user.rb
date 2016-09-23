@@ -12,9 +12,10 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
 
-  #EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-  #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
-  #validates :doc, :presence => true, :uniqueness => true, :length => 11
+  EMAIL_REGEX = /\A(\S+)@(.+)\.(\S+)\z/
+  validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
+  validates :doc, :presence => true, :uniqueness => true, length: {is: 11}, format: { without: /\s/ }
+
   validates :pwd, confirmation: true
   validates_presence_of :name,:pwd
   before_validation 'check_phones'
@@ -38,14 +39,12 @@ class User < ActiveRecord::Base
     end
   end
 
-
   def hash_my_pass
     tmpcryp = Decrypter.new
     if pwd.present?
       self.pwd = tmpcryp.creatHash self.pwd
     end
   end
-
 
   def check_phones
     temp_phone = Array.new
