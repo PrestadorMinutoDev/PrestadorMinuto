@@ -16,19 +16,11 @@ class User < ActiveRecord::Base
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
   #validates :doc, :presence => true, :uniqueness => true, :length => 11
   validates :pwd, confirmation: true
-  validate :validate_phones
   validates_presence_of :name,:pwd
-  before_validation 'check_my_stuff'
   before_save 'encrypt_my_data','hash_my_pass'
   after_find  'decrypt_my_data'
 
-  def validate_phones
-  self.phones.each do |r|
-    if self.phones.find_by(r.number).length > 1
-      errors.add 'Trying to save duplicated phones!'
-    end
-  end
-end
+
 
   def encrypt_my_data
     tmpcryp = Decrypter.new
@@ -45,22 +37,6 @@ end
     end
   end
 
-  def check_my_stuff
-
-      if self.phones.length > 0
-        myp = Array.new
-        self.phones.each do |p|
-          tmp = Phone.find_by(number: p.number)
-          if tmp.nil?
-            myp << p
-          else
-            myp << tmp
-          end
-
-        end
-        self.phones = myp
-      end
-  end
 
   def hash_my_pass
     tmpcryp = Decrypter.new
