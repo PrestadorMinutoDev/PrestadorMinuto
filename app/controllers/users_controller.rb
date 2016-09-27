@@ -33,10 +33,12 @@ class UsersController < ApplicationController
   def register_user
     @user = User.new
     @user.build_address
+
     @user.phones.build
     @user.address.build_postal_code
     @user.address.build_street
     @user.address.build_city
+
   end
 
   # POST /register_user/create
@@ -44,6 +46,7 @@ class UsersController < ApplicationController
 
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
+
 
     respond_to do |format|
       if @user.save
@@ -57,7 +60,19 @@ class UsersController < ApplicationController
     end
 
 
+  end
+
+  def update_register_users
+    respond_to do |format|
+      if @user.update(register_user_params)
+        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
+  end
 
   # POST /users
   # POST /users.json
@@ -74,7 +89,7 @@ class UsersController < ApplicationController
   end
 
   def edit_register_user
-     @user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
 
@@ -84,9 +99,12 @@ class UsersController < ApplicationController
       @addresses = Address.all
   end
 
-  def update_register_user
+
+
+  # PATCH/PUT /users/1
+  # PATCH/PUT /users/1.json
+  def update
     respond_to do |format|
-      @user = User.find(params[:id])
       if @user.update(register_user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
@@ -98,20 +116,6 @@ class UsersController < ApplicationController
   end
 
 
-
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /users/1
   # DELETE /users/1.json
@@ -133,14 +137,12 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :mobile, :doc, :birthdate, :email, :last_logon, :certdate)
     end
+
   def register_user_params
-    params.require(:user).permit(:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
-                                user_phones_attributes:[:user_id, :phone_id],
-                                phones_attributes: [:number,:haswp],
-                                address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,
+    params.require(:user).permit(:id,:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
+                                 phones_attributes: [:id,:number,:haswp],
+                                 address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,
                                                       postal_code_attributes: [:zip_number],street_attributes: [:name],
                                                       city_attributes: [:name]])
   end
-
-
 end

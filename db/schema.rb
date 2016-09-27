@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912175760) do
+ActiveRecord::Schema.define(version: 20160926013451) do
 
   create_table "account_kinds", force: :cascade do |t|
     t.string   "name",       limit: 55
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20160912175760) do
     t.string   "avatar_content_type", limit: 255
     t.integer  "avatar_file_size",    limit: 4
     t.datetime "avatar_updated_at"
+    t.string   "password_digest",     limit: 255
   end
 
   add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree

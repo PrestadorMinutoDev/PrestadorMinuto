@@ -19,7 +19,7 @@ class Decrypter
     Base64.encode64(c.update(value.to_s) + c.final)
   end
 
-  def creatHash(textToHAsh)
-    my_password = BCrypt::Password.create(textToHAsh)
+  def create_hash(text_to_hash,salt)
+    my_password = BCrypt::Engine.hash_secret(text_to_hash, salt)
   end
 end

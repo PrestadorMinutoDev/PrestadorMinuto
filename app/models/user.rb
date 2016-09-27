@@ -1,10 +1,8 @@
 class User < ActiveRecord::Base
 
-  ## Só é utilizado belongs_to quando a classe tem foreign_key
   belongs_to :address
 
-  has_many :ads
-  has_one :account
+  #has_many :accounts
   has_many :user_phones
   has_many :phones,:through => :user_phones
 
@@ -14,15 +12,12 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
 
-
-
   #EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
   #validates :doc, :presence => true, :uniqueness => true, :length => 11
   validates :pwd, confirmation: true
-
   validates_presence_of :name,:pwd
-  before_validation 'check_my_stuff'
+  before_validation 'check_phones'
   before_save 'encrypt_my_data','hash_my_pass'
   after_find  'decrypt_my_data'
 
@@ -43,43 +38,48 @@ class User < ActiveRecord::Base
     end
   end
 
-  def check_my_stuff
-
-      self.address.city = City.find_or_create_by(name: self.address.city.name)
-      self.address.street = Street.find_or_create_by(name: self.address.street.name)
-      self.address.postal_code = PostalCode.find_or_create_by(zip_number: self.address.postal_code.zip_number)
-      if self.phones.length > 0
-        puts "oi"
-        if self.phones.uniq.length == self.phones.length
-          #self.user_phones.destroy_all
-          myp = Array.new
-          self.phones.each do |p|
-            tmp = Phone.find_by(number: p.number)
-            puts 'my_id:'
-            puts p.id
-            if tmp.nil?
-              myp << p
-            else
-              myp << tmp
-            end
-          end
-          self.phones = myp
-        else
-          errors.add :phones, 'Duplicated phones found'
-        end
-      end
-
-
-  end
-
 
   def hash_my_pass
     tmpcryp = Decrypter.new
     if pwd.present?
-      self.pwd = tmpcryp.creatHash self.pwd
+      self.pwd = tmpcryp.create_hash self.pwd, self.slt
     end
   end
 
+  def check_phones
+    temp_phone = Array.new
+    self.phones.each do |f|
+      if f.id.nil?
+        if (p = Phone.find_by(number: f.number)).nil?
+          temp_phone << Phone.new(number: f.number)
+        else
+          temp_phone << p
+        end
+      else
+        if f.number != Phone.find(f.id).number
+          if (p = Phone.find_by(number: f.number)).nil?
+            temp_phone << Phone.new(number: f.number)
+          else
+            temp_phone << p
+
+          end
+        end
+      end
+    end
+    self.phones = temp_phone
+
+  end
+
+  def authentic(email,pass)
+    u = User.find_by_email(email)
+    tmp_cryp = Decrypter.new
+    if self.pwd == tmp_cryp.create_hash(pass,u.slt)
+      true
+    else
+      false
+    end
+
+  end
 
   has_attached_file :avatar, styles: { original: "128x128>" },
                     default_url: "/assets/nobody_default.jpg",

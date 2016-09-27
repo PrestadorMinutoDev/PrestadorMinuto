@@ -1,4 +1,4 @@
-<%= form_for @user,:url =>{controller: "users",:action => 'update_register_user'}, :method => "put", html: { multipart: true } do |f| %>
+<%= form_for @user,:url =>{controller: "users",:action => 'update'}, :method => "put", html: { multipart: true } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -29,18 +29,17 @@
     </div>
 
     <!-- Begin Phones model -->
+    <%= f.fields_for :phones do |phones| %>
+        <div>
+          <%= f.hidden_field :id%>
 
-    <%= f.fields_for :user_phones do |upp| %>
-      <%= f.fields_for :phones, upp do |phones| %>
-      <div>
-        <%= f.hidden_field :id %>
-        <%= phones.label :number %>
-        <%= phones.text_field :number %><br>
-      </div>
-      <% end %>
-    <%end %>
+          <%= phones.label :number %>
+          <%= phones.text_field :number %><br>
 
-
+          <%= phones.label :haswp %>
+          <%= phones.check_box :haswp %><br>
+        </div>
+    <% end %>
 
     <!-- End Phones model -->
 
@@ -83,7 +82,7 @@
           <% end %>
 
           <%= address.label :state %>
-          <%= address.collection_select :state_id, State.order(:name),:id,:name %><br>
+          <%= address.collection_select :state_id, State.order(:name),:id,:name%><br>
           <%= address.label :country %>
           <%= address.collection_select :country_id, Country.order(:name),:id,:name%><br>
         </div>

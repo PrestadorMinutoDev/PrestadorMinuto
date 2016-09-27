@@ -47,7 +47,7 @@
     </div>
     <div class="field">
       <%= f.label :birthdate %><br>
-      <%= f.date_select :birthdate %>
+      <%= f.date_select :birthdate, :start_year => Time.now.year - 100, :end_year => Time.now.year - 18, :selected => Time.now.year - 18 %>
     </div>
     <div class="field">
       <%= f.label :email %><br>
@@ -76,7 +76,7 @@
           <% end %>
           <%= address.fields_for :city do |cit| %>
               <%= cit.label :name, 'Cidade' %>
-              <%= cit.text_field :name,:value => 'Belo Horizonte', :readonly => true%><br>
+              <%= cit.text_field :name %><br>
           <% end %>
 
           <%= address.label :state %>

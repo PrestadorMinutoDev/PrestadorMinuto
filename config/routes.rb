@@ -1,18 +1,27 @@
 Rails.application.routes.draw do
+  get 'login', to: 'sessions#new', as: 'login_user'
+
   get 'registerUser', to: 'users#register_user'
   post 'registerUser', to: 'users#create_register_user'
   get 'register_users', to: 'users#index_register_users'
+
+
 
   get 'show_register_user/:id', to: 'users#show_register_users', as: 'show_register_user'
   get 'edit_register_user/:id/edit', to: 'users#edit_register_user', as: 'edit_register_user'
   put 'update_register_user/:id', to: 'users#update_register_user', as: 'update_register_user'
 
 
-
+  ##SESSIONS ROUTES
+  get    'sign_in'   => 'users#new'
+  post   'sign_in'   => 'sessions#create'
+  delete 'sign_out'  => 'sessions#destroy'
 
   get 'admin/index'
 
   get 'home/index'
+
+  #root 'sessions#new'
   root 'home#index'
 
   resources :ads
