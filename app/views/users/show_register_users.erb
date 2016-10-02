@@ -1,25 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<div class="header-show-user">
+  <%= image_tag @user.avatar.url(:original) %>
+  <div class="content">
+    <ul>
+      <strong>Name:</strong>
+      <%= @user.name %>
+
+      <strong>Doc:</strong>
+      <%= @user.doc %>
+
+      <strong>Birthdate:</strong>
+      <%= @user.birthdate %>
+      <strong>Email:</strong>
+      <%= @user.email %>
+
+    </ul>
+  </div>
+</div>
 
 
-<p>
-  <strong>Doc:</strong>
-  <%= @user.doc %>
-</p>
 
-<p>
-  <strong>Birthdate:</strong>
-  <%= @user.birthdate %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+
+
 
 <p>
   <strong>Last logon:</strong>
@@ -37,7 +41,16 @@
   <%= @user.phones[0].number %>
 </p>
 
-<%= image_tag @user.avatar.url(:original) %>
+<p>
+  <strong>Cidade:</strong>
+  <%= @user.address.city.name %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @user.address.state.name %>
+</p>
+
 
 <%= link_to 'Edit', edit_register_user_path(@user) %> |
 <%= link_to 'Back', registerUser_path %>

@@ -1,8 +1,21 @@
 <%= form_for @user,:url =>{controller: "users",:action => 'create_register_user'}, :method => "post", html: { multipart: true } do |f| %>
-  <% if @user.errors.any? %>
+
+    <script>
+      $(function() {
+        var i = 1;
+        $("#addMore").click(function(e) {
+          e.preventDefault();
+            $("#phones").append("<li></li><label for='user_phones_attributes_"+ i +"_number'>Number </label>");
+            $("#phones").append("<input name='user[phones_attributes]["+ i +"][number]' id='user_phones_attributes_"+i+"_number' type='text'/>");
+            i++;
+        });
+      });
+    </script>
+
+
+    <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
       <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -30,10 +43,11 @@
 
     <!-- Begin Phones model -->
     <%= f.fields_for :phones do |phones| %>
-        <div>
+        <div id="phones">
           <%= phones.label :number %>
-          <%= phones.text_field :number %><br>
-
+          <%= phones.text_field :number %> <button id="addMore"></button><br>
+        </div>
+        <div>
           <%= phones.label :haswp %>
           <%= phones.check_box :haswp %><br>
         </div>

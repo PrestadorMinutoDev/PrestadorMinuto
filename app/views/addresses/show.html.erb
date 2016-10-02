@@ -1,37 +1,19 @@
 <p id="notice"><%= notice %></p>
 
+
+
+  <strong>Complement:</strong>
+  <%= @address.complement %>
+</p>
+
 <p>
   <strong>Zip:</strong>
-  <%= @address.zip %>
+  <%= @address.number %>
 </p>
 
 <p>
-  <strong>Address1:</strong>
-  <%= @address.address1 %>
-</p>
-
-<p>
-  <strong>Address2:</strong>
-  <%= @address.address2 %>
-</p>
-
-<p>
-  <strong>Address3:</strong>
-  <%= @address.address3 %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @address.city_id %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @address.state_id %>
-</p>
-<p>
-  <strong>Country:</strong>
-  <%= @address.country_id %>
+  <strong>Geolocation:</strong>
+  <%= @address.geolocation %>
 </p>
 <%= link_to 'Edit', edit_address_path(@address) %> |
 <%= link_to 'Back', addresses_path %>

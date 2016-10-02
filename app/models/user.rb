@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   belongs_to :address
 
-  #has_many :accounts
+  has_one :account
   has_many :user_phones
   has_many :phones,:through => :user_phones
 
@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :phones
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :account
 
 
   #EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
@@ -18,7 +19,7 @@ class User < ActiveRecord::Base
   validates :pwd, confirmation: true
   validates_presence_of :name,:pwd
   before_validation 'check_phones'
-  before_save 'encrypt_my_data','hash_my_pass'
+  before_save 'encrypt_my_data','hash_my_pass', 'check_account'
   after_find  'decrypt_my_data'
 
 
@@ -37,7 +38,6 @@ class User < ActiveRecord::Base
       self.doc = tmpcryp.decrypt self.doc, self.slt
     end
   end
-
 
   def hash_my_pass
     tmpcryp = Decrypter.new
@@ -79,6 +79,13 @@ class User < ActiveRecord::Base
       false
     end
 
+  end
+
+  def check_account
+    if self.account.nil?
+      self.account = Account.new
+      self.account.phone = self.phones.first
+    end
   end
 
   has_attached_file :avatar, styles: { original: "128x128>" },

@@ -31,14 +31,16 @@ ActiveRecord::Schema.define(version: 20160926013451) do
   add_index "account_resources", ["resource_id"], name: "index_account_resources_on_resource_id", using: :btree
 
   create_table "accounts", force: :cascade do |t|
-    t.string   "account_status",  limit: 255
+    t.string   "account_status",  limit: 1, default: "W"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.integer  "user_id",         limit: 4
-    t.integer  "account_kind_id", limit: 4,   default: 1
+    t.integer  "account_kind_id", limit: 4, default: 1
+    t.integer  "phone_id",        limit: 4
   end
 
   add_index "accounts", ["account_kind_id"], name: "index_accounts_on_account_kind_id", using: :btree
+  add_index "accounts", ["phone_id"], name: "index_accounts_on_phone_id", using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "ad_images", force: :cascade do |t|
@@ -200,6 +202,7 @@ ActiveRecord::Schema.define(version: 20160926013451) do
   add_foreign_key "account_resources", "account_kinds"
   add_foreign_key "account_resources", "resources"
   add_foreign_key "accounts", "account_kinds"
+  add_foreign_key "accounts", "phones"
   add_foreign_key "accounts", "users"
   add_foreign_key "ad_images", "ads"
   add_foreign_key "ad_images", "images"

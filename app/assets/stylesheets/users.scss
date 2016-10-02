@@ -2,3 +2,44 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#addMore {
+  background-image: url("mobile.png");
+  background-repeat: no-repeat;
+
+  height:45px;
+  width: 35px;
+}
+
+img {
+  float:left;
+  margin:0 20px 10px 0;
+}
+
+.header{
+  padding-bottom: 15px;
+}
+
+.header ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
+  background-color: #333;
+}
+.header li{
+  float: left;
+  display: inline;
+  list-style: none;
+
+}
+.header li a{
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.header li a:hover{
+  color: black;
+  width: auto;
+  background-color: white;
+}

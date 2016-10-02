@@ -33,7 +33,6 @@ class UsersController < ApplicationController
   def register_user
     @user = User.new
     @user.build_address
-
     @user.phones.build
     @user.address.build_postal_code
     @user.address.build_street
@@ -41,17 +40,17 @@ class UsersController < ApplicationController
 
   end
 
+
   # POST /register_user/create
   def create_register_user
 
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
 
-
     respond_to do |format|
       if @user.save
         #redirect_to action: 'show', id:@user.id
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to register_users_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :register_user }
@@ -65,8 +64,8 @@ class UsersController < ApplicationController
   def update_register_users
     respond_to do |format|
       if @user.update(register_user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        format.html { redirect_to show_register_user_path, notice: 'User was successfully updated.' }
+        format.json { render :show_register_users, status: :ok, location: @user }
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -79,16 +78,16 @@ class UsersController < ApplicationController
 
   def show_register_users
 
-
+    params[:id] = current_user
     @user = User.find(params[:id])
     @phone = Phone.find(params[:id])
     @address = Address.find(params[:id])
 
 
-
   end
 
   def edit_register_user
+    params[:id] = current_user
     @user = User.find(params[:id])
   end
 
@@ -106,8 +105,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(register_user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        format.html { redirect_to show_register_user_path, notice: 'User was successfully updated.' }
+        format.json { render :show_register_users, status: :ok, location: @user }
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -141,6 +140,7 @@ class UsersController < ApplicationController
   def register_user_params
     params.require(:user).permit(:id,:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                  phones_attributes: [:id,:number,:haswp],
+                                 accounts_attributes:[:account_status],
                                  address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,
                                                       postal_code_attributes: [:zip_number],street_attributes: [:name],
                                                       city_attributes: [:name]])

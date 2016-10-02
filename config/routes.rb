@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
 
 
-  get 'show_register_user/:id', to: 'users#show_register_users', as: 'show_register_user'
-  get 'edit_register_user/:id/edit', to: 'users#edit_register_user', as: 'edit_register_user'
-  put 'update_register_user/:id', to: 'users#update_register_user', as: 'update_register_user'
+  get 'show_register_user', to: 'users#show_register_users', as: 'show_register_user'
+  get 'edit_register_user/:id', to: 'users#edit_register_user', as: 'edit_register_user'
+  put 'update_register_user/:id/edit', to: 'users#update_register_users', as: 'update_register_users'
 
 
   ##SESSIONS ROUTES
@@ -24,23 +24,23 @@ Rails.application.routes.draw do
   #root 'sessions#new'
   root 'home#index'
 
-  resources :ads
-  resources :accounts
-  resources :account_resources
-  resources :rates
-  resources :ad_images
-  resources :images
-  resources :user_phones
+  #resources :ads
+  #resources :accounts
+  #resources :account_resources
+  #resources :rates
+  #resources :ad_images
+  #resources :images
+  #resources :user_phones
   resources :users
-  resources :resources
-  resources :account_kinds
-  resources :countries
-  resources :states
-  resources :cities
-  resources :addresses
-  resources :phones
-  resources :operators
-  resources :professions
+  #resources :resources
+  #resources :account_kinds
+  #resources :countries
+  #resources :states
+  #resources :cities
+  #resources :addresses
+  #resources :phones
+  #resources :operators
+  #resources :professions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

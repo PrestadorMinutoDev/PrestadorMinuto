@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
       redirect_to login_user_path
     end
   end
+
+  def login_required
+    redirect_to('/') if current_user.blank?
+  end
 end

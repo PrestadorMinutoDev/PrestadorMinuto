@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
   before_action :set_ad, only: [:show, :edit, :update, :destroy]
+  before_filter :login_required
 
   # GET /ads
   # GET /ads.json
