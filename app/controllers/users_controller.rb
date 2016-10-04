@@ -1,6 +1,8 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_filter :login_required, :except => ['new', 'register_user', 'create_register_user']
+  before_filter :block_access, :only =>['register_user']
 
   # GET /users
   # GET /users.json
@@ -50,7 +52,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         #redirect_to action: 'show', id:@user.id
-        format.html { redirect_to register_users_path, notice: 'User was successfully created.' }
+        format.html { redirect_to home_index_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :register_user }
@@ -138,7 +140,7 @@ class UsersController < ApplicationController
     end
 
   def register_user_params
-    params.require(:user).permit(:id,:name,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
+    params.require(:user).permit(:id,:name,:gender,:doc, :birthdate, :email, :last_logon, :certdate,:pwd,:pwd_confirmation, :avatar,
                                  phones_attributes: [:id,:number,:haswp],
                                  accounts_attributes:[:account_status],
                                  address_attributes: [:number, :complement, :geolocate, :state_id, :country_id,

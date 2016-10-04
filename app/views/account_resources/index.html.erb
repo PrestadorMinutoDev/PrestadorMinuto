@@ -5,8 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Parameter</th>
-      <th>Account Kind ID</th>
+      <th>Value</th>
+      <th>Account Kind</th>
       <th>Resource ID</th>
       <th colspan="3"></th>
     </tr>
@@ -15,9 +15,9 @@
   <tbody>
     <% @account_resources.each do |account_resource| %>
       <tr>
-        <td><%= account_resource.parameter %></td>
-        <td><%= account_resource.account_kind_id %></td>
-        <td><%= account_resource.resource_id %></td>
+        <td><%= account_resource.value %></td>
+        <td><%= account_resource.account_kind.name %></td>
+        <td><%= account_resource.resource.name %></td>
         <td><%= link_to 'Show', account_resource %></td>
         <td><%= link_to 'Edit', edit_account_resource_path(account_resource) %></td>
         <td><%= link_to 'Destroy', account_resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>

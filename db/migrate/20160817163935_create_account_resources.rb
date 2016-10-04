@@ -1,7 +1,7 @@
 class CreateAccountResources < ActiveRecord::Migration
   def change
     create_table :account_resources do |t|
-      t.string :parameter
+      t.string :value
 
       t.timestamps null: false
     end

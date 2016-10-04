@@ -42,7 +42,7 @@
         <% end %>
         <td><%= user.address.country.name %></td>
         <td><%= user.address.state.name %></td>
-        <td><%= user.account.account_status %></td>
+        <td><%= user.account.account_kind.name %></td>
         <td><%= link_to 'Show', user %></td>
         <!-- ##edit_user_path(user) !-->
         <td><%= link_to 'Edit', edit_register_user_path(user) %></td>

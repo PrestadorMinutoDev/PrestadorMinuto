@@ -1,13 +1,16 @@
 <html>
   <head>
     <body>
-
-
+      <p id="notice"><%= notice %></p>
       <h1>Home#index</h1>
       <p>Find me in app/views/home/index.html.erb</p>
       <ul>
         <li><%= link_to 'Admin Panel',  admin_index_path  %></li>
+
+        <!-- Usuário está logado? -->
+        <% unless current_user.present? %>
         <li><%= link_to 'Register new user',  registerUser_path  %></li>
+        <% end %>
       </ul>
     </body>
   </head>

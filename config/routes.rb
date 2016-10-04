@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   #root 'sessions#new'
   root 'home#index'
 
-  #resources :ads
+  resources :ads
   #resources :accounts
   #resources :account_resources
   #resources :rates

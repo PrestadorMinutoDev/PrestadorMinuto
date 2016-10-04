@@ -14,4 +14,16 @@ states = State.create([{ name: 'AC' },{ name: 'AL' },{ name: 'AP' },{ name: 'AM'
                        { name: 'PI' },{ name: 'RJ' },{ name: 'RN' },{ name: 'RS' },{ name: 'RO' },{ name: 'RR' },{ name: 'SC' },{ name: 'SP' },
                        { name: 'SE' },{ name: 'TO' }])
 professions = Profession.create([{ name_m: 'Pintor', name_f: 'Pintora'}, {name_m: 'Pedreiro', name_f: 'Pedreira'}])
-account_kind = AccountKind.create([{name: 'Free'},{name: 'Premium'}])
+account_kind = AccountKind.create([{name: 'Free'},{name: 'Basic'},{name: 'Premium'}])
+resource = Resource.create([{name: 'Click', parameterType: 'INT'}, {name: 'Certify', parameterType: 'BOOL'},
+                            {name: 'AdNumber', parameterType: 'INT'},{name: 'AdPriority', parameterType: 'INT'}])
+account_resources = AccountResource.create([{account_kind_id: 1, resource_id: 1, value: '300'},
+                                            {account_kind_id: 2, resource_id: 1, value: '0'},
+                                            {account_kind_id: 3, resource_id: 1, value: '0'},
+                                            {account_kind_id: 3, resource_id: 2, value: 'NULL'},
+                                            {account_kind_id: 1, resource_id: 3, value: '1'},
+                                            {account_kind_id: 2, resource_id: 3, value: '2'},
+                                            {account_kind_id: 3, resource_id: 3, value: '2'},
+                                            {account_kind_id: 1, resource_id: 4, value: '0'},
+                                            {account_kind_id: 2, resource_id: 4, value: '0'},
+                                            {account_kind_id: 3, resource_id: 4, value: '1000'}])

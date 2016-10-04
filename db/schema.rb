@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926013451) do
+ActiveRecord::Schema.define(version: 20161004113410) do
 
   create_table "account_kinds", force: :cascade do |t|
     t.string   "name",       limit: 55
@@ -19,8 +19,17 @@ ActiveRecord::Schema.define(version: 20160926013451) do
     t.datetime "updated_at",            null: false
   end
 
+  create_table "account_resource_values", force: :cascade do |t|
+    t.string  "value",               limit: 255
+    t.integer "account_id",          limit: 4
+    t.integer "account_resource_id", limit: 4
+  end
+
+  add_index "account_resource_values", ["account_id"], name: "index_account_resource_values_on_account_id", using: :btree
+  add_index "account_resource_values", ["account_resource_id"], name: "index_account_resource_values_on_account_resource_id", using: :btree
+
   create_table "account_resources", force: :cascade do |t|
-    t.string   "parameter",       limit: 255
+    t.string   "value",           limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "account_kind_id", limit: 4
@@ -178,6 +187,7 @@ ActiveRecord::Schema.define(version: 20160926013451) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                limit: 175
+    t.string   "gender",              limit: 1
     t.string   "doc",                 limit: 75
     t.date     "birthdate"
     t.string   "email",               limit: 175
@@ -199,6 +209,8 @@ ActiveRecord::Schema.define(version: 20160926013451) do
   add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree
   add_index "users", ["image_id"], name: "index_users_on_image_id", using: :btree
 
+  add_foreign_key "account_resource_values", "account_resources"
+  add_foreign_key "account_resource_values", "accounts"
   add_foreign_key "account_resources", "account_kinds"
   add_foreign_key "account_resources", "resources"
   add_foreign_key "accounts", "account_kinds"
