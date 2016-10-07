@@ -1,8 +1,8 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :login_required, :except => ['new', 'register_user', 'create_register_user']
-  before_filter :block_access, :only =>['register_user']
+ # before_filter :login_required, :except => ['new', 'register_user', 'create_register_user']
+ # before_filter :block_access, :only =>['register_user']
 
   # GET /users
   # GET /users.json
@@ -65,6 +65,7 @@ class UsersController < ApplicationController
 
   def update_register_users
     respond_to do |format|
+      @user = User.find(params[:id])
       if @user.update(register_user_params)
         format.html { redirect_to show_register_user_path, notice: 'User was successfully updated.' }
         format.json { render :show_register_users, status: :ok, location: @user }
@@ -82,7 +83,7 @@ class UsersController < ApplicationController
 
     params[:id] = current_user
     @user = User.find(params[:id])
-    @phone = Phone.find(params[:id])
+    @phone = Phone.find_by(id: params[:id])
     @address = Address.find(params[:id])
 
 

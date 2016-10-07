@@ -1,7 +1,7 @@
 class Phone < ActiveRecord::Base
   belongs_to :operator
   validates :number, uniqueness: true
-
+  validates_presence_of :number
   
   has_many :user_phones
 

@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  has_attached_file :avatar, styles: { original: "128x128>" },
+  has_attached_file :avatar, styles: { original: "128x128>", thumb: "50x50>"},
                     default_url: "/assets/nobody_default.jpg",
                     path: "#{Rails.root}/public/assets/:id/:style/:basename.:extension",
                     url: '/assets/:id/:style/:basename.:extension'

@@ -1,31 +1,46 @@
+<html>
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Ads</h1>
+<h1>ADS</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Rating avg</th>
-      <th>Profession</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<head>
+</head>
 
-  <tbody>
+<body>
     <% @ads.each do |ad| %>
-      <tr>
-        <td><%= ad.description %></td>
-        <td><%= ad.rating_avg %></td>
-        <td><%= ad.profession.name_m %></td>
-        <td><%= link_to 'Show', ad %></td>
-        <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-        <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="adsview">
+
+        <table class="tableAd">
+          <td>
+            <div class="image">
+            <%= image_tag ad.user.avatar.url(:thumb) %>
+            </div>
+          </td>
+          <td>
+            <div class="content">
+              <p>
+                <strong>AD_ID:</strong>
+                <%= ad.id %>
+              </p>
+              <p>
+                <strong>Nome:</strong>
+                <%= ad.user.name %>
+              </p>
+              <p>
+                <strong>Descrição:</strong>
+                <%= ad.description %>
+              </p>
+              <p>
+                <strong>Profissão:</strong>
+                <%= ad.profession.name_m %>
+              </p>
+            </div>
+
+
+          </td>
+        </table>
+      </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
-
-<%= link_to 'New Ad', new_ad_path %>
+</body>
+</html>

@@ -1,6 +1,5 @@
 class AdsController < ApplicationController
   before_action :set_ad, only: [:show, :edit, :update, :destroy]
-  before_filter :login_required
 
   # GET /ads
   # GET /ads.json
@@ -18,6 +17,7 @@ class AdsController < ApplicationController
     @ad = Ad.new
     @ad.build_profession
     @ad.build_user
+    @ad.images.build
   end
 
   # GET /ads/1/edit
@@ -30,7 +30,12 @@ class AdsController < ApplicationController
 
     @ad = Ad.new(ad_params)
     @profession = Profession.find(params[:profession][:profession_id])
+
+    ##Need pass a param with having a user_id
+    params[:user_id] = current_user
+    @user = User.find(params[:user_id])
     @ad.profession = @profession
+    @ad.user = @user
 
 
     respond_to do |format|

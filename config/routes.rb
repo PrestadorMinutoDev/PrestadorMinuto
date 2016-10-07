@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'edit_register_user/:id', to: 'users#edit_register_user', as: 'edit_register_user'
   put 'update_register_user/:id/edit', to: 'users#update_register_users', as: 'update_register_users'
 
-
   ##SESSIONS ROUTES
   get    'sign_in'   => 'users#new'
   post   'sign_in'   => 'sessions#create'

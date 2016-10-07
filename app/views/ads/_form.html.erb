@@ -16,12 +16,16 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :rating_avg %><br>
-    <%= f.text_field :rating_avg %>
-  </div>
-  <div>
       <%= collection_select :profession, :profession_id, Profession.order(:name_m),:id,:name_m%>
   </div>
+
+    <%= f.fields_for :images do |images| %>
+    <div class="field">
+      <%= images.label :Imagem %><br>
+      <%= images.file_field :url %>
+    </div>
+    <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

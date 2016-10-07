@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+
     @user = User.find_by(email: params[:session][:email].downcase)
     if @user && @user.authentic(@user.email,params[:session][:password])
       ## Cookie Encrypt
@@ -20,7 +21,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    cookies.delete :user_id
+    cookies.delete :guest_id
     redirect_to root_url
   end
 end
