@@ -33,7 +33,7 @@ class AdsController < ApplicationController
 
     ##Need pass a param with having a user_id
     params[:user_id] = current_user
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
     @ad.profession = @profession
     @ad.user = @user
 
