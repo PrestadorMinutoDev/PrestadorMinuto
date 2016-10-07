@@ -83,7 +83,8 @@ class UsersController < ApplicationController
 
     params[:id] = current_user
     @user = User.find(params[:id])
-
+    @phone = Phone.find_by(id: params[:id])
+    @address = Address.find(params[:id])
 
 
   end
