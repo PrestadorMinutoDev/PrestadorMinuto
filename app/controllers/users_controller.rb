@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 
   def update_register_users
     respond_to do |format|
-      @user = User.find(params[:id])
+      @user = User.find(cookies.signed[:guest_id])
       if @user.update(register_user_params)
         format.html { redirect_to show_register_user_path, notice: 'User was successfully updated.' }
         format.json { render :show_register_users, status: :ok, location: @user }
@@ -92,6 +92,8 @@ class UsersController < ApplicationController
   def edit_register_user
     params[:id] = current_user
     @user = User.find(params[:id])
+    @phone = Phone.find_by(id: params[:id])
+    @address = Address.find(params[:id])
   end
 
 

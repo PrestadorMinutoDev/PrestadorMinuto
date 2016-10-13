@@ -19,6 +19,10 @@
       <%= collection_select :profession, :profession_id, Profession.order(:name_m),:id,:name_m%>
   </div>
 
+    <div class="field">
+      <%= collection_select :profession, :profession_id_1, Profession.order(:name_m),:id,:name_m%>
+    </div>
+
     <%= f.fields_for :images do |images| %>
     <div class="field">
       <%= images.label :Imagem %><br>

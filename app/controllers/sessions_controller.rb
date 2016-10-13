@@ -9,13 +9,17 @@ class SessionsController < ApplicationController
   def create
 
     @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authentic(@user.email,params[:session][:password])
-      ## Cookie Encrypt
-      cookies.signed[:guest_id] = @user.id
-      sign_in(@user)
-      redirect_to show_register_user_path(current_user)
-    else
+    if @user.nil?
       render 'new'
+    else
+      if @user || @user.authentic(@user.email,params[:session][:password])
+        ## Cookie Encrypt
+        cookies.signed[:guest_id] = @user.id
+        sign_in(@user)
+        redirect_to show_register_user_path(current_user)
+      else
+        render 'new'
+      end
     end
   end
 

@@ -49,23 +49,30 @@ class User < ActiveRecord::Base
   def check_phones
     temp_phone = Array.new
     self.phones.each do |f|
-      if f.id.nil?
-        if (p = Phone.find_by(number: f.number)).nil?
-          temp_phone << Phone.new(number: f.number)
+
+      puts '###########################'
+      puts f.id
+      puts f.number
+      if f.id.nil? #Se não tiver ID
+        if (p = Phone.find_by(number: f.number)).nil? #SE Telefone não encontrado
+          temp_phone << Phone.new(number: f.number) #Cria numero
         else
-          temp_phone << p
+          temp_phone << p #Insiro o telefone encontrado
         end
       else
-        if f.number != Phone.find(f.id).number
-          if (p = Phone.find_by(number: f.number)).nil?
-            temp_phone << Phone.new(number: f.number)
-          else
+        if f.number != Phone.find(f.id).number #Se o Numero não bater com o ID
+          if (p = Phone.find_by(number: f.number)).nil? #Telefone não encontrado
+            temp_phone << Phone.new(number: f.number) #Cria Telefone
+          else #Está tudo batendo
             temp_phone << p
 
           end
+        else
+          temp_phone << f
         end
       end
     end
+
     self.phones = temp_phone
 
   end
