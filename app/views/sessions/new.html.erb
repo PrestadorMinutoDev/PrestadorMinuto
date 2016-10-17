@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= form_for :session, url: sign_in_path do |f| %>
+<center><%= form_for :session, url: sign_in_path do |f| %>
 
     <div class="field">
       <%= f.label :email %><br />
@@ -16,3 +16,4 @@
     </div>
     <p>New user? <%= link_to "Sign up now!", registerUser_path %></p>
 <% end %>
+</center>

@@ -1,25 +1,19 @@
-<html>
-<p id="notice"><%= notice %></p>
-
-
 <head>
 </head>
-
 <body>
-    <% @ads.each do |ad| %>
-
+<% if @ads.size > 0 %>
         <table class="table table-hover">
           <thead>
           <tr>
             <td>Nome: </td>
-            <td>Descrição</td>
-            <td>Profissão</td>
+            <td>Descrição:</td>
+            <td>Profissão:</td>
             <td>Criado em:</td>
             <td>Actions:</td>
           </tr>
           </thead>
           <div class="content">
-
+            <% @ads.each do |ad| %>
             <tbody>
             <tr>
               <td><%= ad.user.name.upcase %></td>
@@ -35,9 +29,10 @@
             </tr>
           </div>
           </tbody>
+          <% end %>
         </table>
+<%end%>
 
-    <% end %>
 
 </body>
 </html>

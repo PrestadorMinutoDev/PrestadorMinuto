@@ -1,20 +1,46 @@
 <header>
-  <div class="header">
-    <nav>
-      <ul>
-        <% if logged_in? %>
-            <li><%= link_to "Home", home_index_path %>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Prestador Minuto", home_index_path, class: 'navbar-brand' %>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <ul class="nav navbar-nav">
+
+          <li><%= link_to "Ads", ads_path %></li>
+
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="input-group">
+            <%= form_tag(ads_path, :method => "get", id: "search-form") do %>
+              <%= text_field_tag :ad, params[:ad], placeholder: "Search ads", class: 'form-control' %>
+              <span class="input-group-btn">
+               <%= submit_tag "Search", class: 'btn btn-default' %>
+              </span>
+            <% end %>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <% if logged_in? %>
+              <li>
                 <%= link_to "Profile", show_register_user_path(current_user) %>
                 <%= link_to "Settings", edit_register_user_path(cookies.signed[:guest_id]) %>
 
-                  <%= link_to "Log out", sign_out_path, method: "delete" %>
+                <%= link_to "Log out", sign_out_path, method: "delete" %>
 
-            </li>
-        <% else %>
-            <li><%= link_to "Home", home_index_path %></li>
-            <li><%= link_to "Log in", login_user_path %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
+              </li>
+          <% else %>
+              <li><%= link_to "Log in", login_user_path %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>

@@ -1,60 +1,63 @@
 <p id="notice"><%= notice %></p>
 
-<div class="showPhoto">
-  <%= image_tag @ad.user.avatar.url(:original) %>
+<div class="col-md-3">
+  <div class="showProfile">
+    <%= image_tag @ad.user.avatar.url(:original), class: 'img-responsive' %><br/>
+    <span class="label label-primary"><%= @ad.user.name %></span>
+    </div>
 </div>
 
-<div class="showTable">
-    <table class="table table-hover">
-      <thead>
-      </thead>
-        <tbody>
-          <tr>
-            <td class="table-title">Nome</td>
-            <td><%= @ad.user.name %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Telefone</td>
-            <td><%= @ad.user.phones[0].number %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Email</td>
-            <td><%= @ad.user.email %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Idade</td>
-            <td><%=  (DateTime.now.year)  - (@ad.user.birthdate.year)%></td>
-          </tr>
-          <tr>
-            <td class="table-title">Sexo</td>
-            <td>
-              <% if (@ad.user.gender.upcase) == 'M' %>
-                Masculino
-              <% else %>
-                Feminino
-              <% end %>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-title">Profissão</td>
-            <td><%= @ad.profession.name_m %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Descrição</td>
-            <td><%= @ad.description %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Pontuação</td>
-            <td><%= @ad.rating_avg %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Criado em</td>
-            <td><%= @ad.created_at %></td>
-          </tr>
-          <tr>
-            <td class="table-title">Modificado em</td>
-            <td><%= @ad.updated_at %></td>
-          </tr>
-        </tbody>
-    </table>
-</div>
+<div class="col-lg-5">
+      <div class="showTable">
+          <table class="table table-hover">
+            <thead>
+            </thead>
+              <tbody>
+                <tr>
+                  <td class="table-title">Telefone</td>
+                  <td><%= @ad.user.phones[0].number %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Email</td>
+                  <td><%= @ad.user.email %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Idade</td>
+                  <td><%=  (DateTime.now.year)  - (@ad.user.birthdate.year)%></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Sexo</td>
+                  <td>
+                    <% if (@ad.user.gender.upcase) == 'M' %>
+                      Masculino
+                    <% else %>
+                      Feminino
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-title">Profissão</td>
+                  <td><%= @ad.profession.name_m %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Descrição</td>
+                  <td><%= @ad.description %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Pontuação</td>
+                  <td><%= @ad.rating_avg %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Criado em</td>
+                  <td><%= created_date(@ad.created_at) %></td>
+                </tr>
+                <tr>
+                  <td class="table-title">Modificado em</td>
+                  <td><%= created_date(@ad.updated_at) %></td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+
+  </div>
+<%= link_to 'Back', home_index_path %>

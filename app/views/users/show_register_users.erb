@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="header-show-user">
-  <%= image_tag @user.avatar.url(:original) %>
+  <%= image_tag @user.avatar.url(:original), class: 'img-responsive' %>
   <div class="content">
     <ul>
       <strong>Name:</strong>
@@ -17,7 +17,6 @@
 
       <strong>Gender:</strong>
       <%= @user.gender %>
-
     </ul>
   </div>
 </div>

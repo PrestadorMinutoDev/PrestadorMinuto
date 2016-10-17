@@ -97,8 +97,9 @@ class User < ActiveRecord::Base
 
   has_attached_file :avatar, styles: { original: "128x128>", thumb: "50x50>"},
                     default_url: "/assets/nobody_default.jpg",
-                    path: "#{Rails.root}/public/assets/:id/:style/:basename.:extension",
-                    url: '/assets/:id/:style/:basename.:extension'
-  validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+                    path: "#{Rails.root}/public/assets/users/:id/:style/:basename.:extension",
+                    url: '/assets/users/:id/:style/:basename.:extension'
+  validates_attachment_content_type :avatar,  size: { in: 0..30.kilobytes }, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+
 
 end
