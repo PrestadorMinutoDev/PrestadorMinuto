@@ -23,6 +23,8 @@ class AdsController < ApplicationController
 
   # GET /ads/1/edit
   def edit
+    params[:id] = current_user
+    @ad = Ad.find_by(user_id: params[:id])
   end
 
   # POST /ads
@@ -54,6 +56,7 @@ class AdsController < ApplicationController
   # PATCH/PUT /ads/1.json
   def update
     respond_to do |format|
+      @ad = Ad.find(params[:id])
       if @ad.update(ad_params)
         format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
         format.json { render :show, status: :ok, location: @ad }

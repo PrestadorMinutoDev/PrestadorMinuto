@@ -14,13 +14,14 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
         <ul class="nav navbar-nav">
 
-          <li><%= link_to "Ads", ads_path %></li>
+           <li><%= link_to "Ads", ad_path %></li>
 
         </ul>
+
         <form class="navbar-form navbar-left" role="search">
           <div class="input-group">
-            <%= form_tag(ads_path, :method => "get", id: "search-form") do %>
-              <%= text_field_tag :ad, params[:ad], placeholder: "Search ads", class: 'form-control' %>
+            <%= form_tag(ad_path, :method => "get", id: "search-form") do %>
+              <%= text_field_tag :ad, params[:ad], placeholder: "Search profession", class: 'form-control' %>
               <span class="input-group-btn">
                <%= submit_tag "Search", class: 'btn btn-default' %>
               </span>

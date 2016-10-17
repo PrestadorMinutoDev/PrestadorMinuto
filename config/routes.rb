@@ -23,7 +23,14 @@ Rails.application.routes.draw do
   #root 'sessions#new'
   root 'home#index'
 
-  resources :ads
+  get 'new_ad', to: 'ads#new', as: 'new_ad'
+  get 'ad', to: 'ads#index', as: 'ad'
+  get 'show_ad/:id', to: 'ads#show', as: 'show_ad'
+  get 'edit_ad/:id', to: 'ads#edit', as: 'edit_ad'
+  put 'update_ad/:id/edit', to: 'ads#update', as: 'update_ad'
+
+
+  #resources :ads
   #resources :accounts
   #resources :account_resources
   #resources :rates

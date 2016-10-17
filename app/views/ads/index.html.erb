@@ -14,18 +14,21 @@
           </thead>
           <div class="content">
             <% @ads.each do |ad| %>
-            <tbody>
-            <tr>
-              <td><%= ad.user.name.upcase %></td>
-              <td><%= ad.description %></td>
-              <td><%= ad.profession.name_m %></td>
-              <td><%= created_date ad.created_at %></td>
-              <td><%= link_to ad, class: 'btn btn-primary btn-xs' do %>
-                    <%= content_tag :span, "", :class => "glyphicon glyphicon-eye-open" %>
-                <% end %></td>
-                </button>
-              </p>
-              </td>
+              <tbody>
+              <tr>
+                <td><%= ad.user.name.upcase %></td>
+                <td><%= ad.description %></td>
+                <td><%= ad.profession.name_m %></td>
+                <td><%= created_date ad.created_at %></td>
+                <td><%= link_to show_ad_path(ad), class: 'btn btn-primary btn-xs' do %>
+                      <%= content_tag :span, "", :class => "glyphicon glyphicon-eye-open" %>
+                    <% end %>
+                    <% if ad.user_id == session[:user_id] %>
+                      <%= link_to edit_ad_path(ad.id), class: 'btn btn-success btn-xs' do %>
+                          <%= content_tag :span, "", :class => "glyphicon glyphicon-pencil" %>
+                    <% end %>
+
+              <% end %></td>
             </tr>
           </div>
           </tbody>
