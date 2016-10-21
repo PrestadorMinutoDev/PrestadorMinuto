@@ -10,35 +10,35 @@
         </button>
         <%= link_to "Prestador Minuto", home_index_path, class: 'navbar-brand' %>
       </div>
-
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
         <ul class="nav navbar-nav">
-
-           <li><%= link_to "Ads", ad_path %></li>
-
+         <li><%= link_to "Ads", ads_path %></li>
+          <% unless current_user.nil? %>
+         <li><%= link_to "My Ads", my_ads_path %></li>
+          <% end %>
         </ul>
 
-        <form class="navbar-form navbar-left" role="search">
+
+        <div class="navbar-form navbar-left" role="search">
           <div class="input-group">
-            <%= form_tag(ad_path, :method => "get", id: "search-form") do %>
-              <%= text_field_tag :ad, params[:ad], placeholder: "Search profession", class: 'form-control' %>
-              <span class="input-group-btn">
-               <%= submit_tag "Search", class: 'btn btn-default' %>
+            <%= form_tag index_by_profession_url, method: :get do%>
+              <%= text_field_tag :search, params[:search], placeholder: "Search profession", class: 'form-control' %>
+                <span class="input-group-btn">
+               <%= submit_tag "search", class: 'btn btn-default' %>
               </span>
             <% end %>
           </div>
-        </form>
+        </div>
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
               <li>
                 <%= link_to "Profile", show_register_user_path(current_user) %>
                 <%= link_to "Settings", edit_register_user_path(cookies.signed[:guest_id]) %>
-
                 <%= link_to "Log out", sign_out_path, method: "delete" %>
-
               </li>
           <% else %>
               <li><%= link_to "Log in", login_user_path %></li>
+              <li><%= link_to "Sign up", registerUser_path %></li>
           <% end %>
         </ul>
       </div>

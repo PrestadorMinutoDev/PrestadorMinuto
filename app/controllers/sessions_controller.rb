@@ -7,12 +7,25 @@ class SessionsController < ApplicationController
   end
 
   def create
+    ##If exist in parameter @ = Login with Email.
+    if params[:session][:login].include? "@"
+      @user = User.find_by(email: params[:session][:login].downcase)
 
-    @user = User.find_by(email: params[:session][:email].downcase)
+    ##Else login with phone
+    else
+    p = Phone.find_by_number(params[:session][:login])
+    ##UserPhone = Phone_id with parameter NUMBER
+    up = UserPhone.find_by_phone_id(p.id)
+    #UserFind = UserPhone.user with parameter ID
+    uf = up.user
+    @user = uf
+
+    end
+
     if @user.nil?
       render 'new'
     else
-      if @user || @user.authentic(@user.email,params[:session][:password])
+      if @user || @user.authentic(params[:login],params[:session][:password])
         ## Cookie Encrypt
         cookies.signed[:guest_id] = @user.id
         sign_in(@user)

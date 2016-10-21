@@ -11,6 +11,19 @@
     </div>
   <% end %>
 
+    <script>
+
+      var i = 1;
+      $("#addMore").click(function(e) {
+        e.preventDefault();
+        $("#phones").append("<li></li><label for='user_phones_attributes_"+ i +"_number'>Number </label>");
+        $("#phones").append("<input name='user[phones_attributes]["+ i +"][number]' id='user_phones_attributes_"+i+"_number' type='text'/>");
+        i++;
+      });
+
+
+    </script>
+
     <!-- Begin USER model -->
 
     <div class="field">
@@ -32,7 +45,7 @@
     <%= f.fields_for :phones do |phones| %>
         <div id="phones">
           <%= phones.label :number %>
-          <%= phones.text_field :number %> <button id="addMore" onclick="AddPhone();"></button><br>
+          <%= phones.text_field :number %><button id="addMore" OnClick="AddPhone();"></button><br>
         </div>
         <div>
           <%= phones.label :haswp %>

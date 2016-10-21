@@ -21,7 +21,12 @@ gem "paperclip", "~> 5.0.0"
 # Use jquery as the JavaScript library Bootstrap
 gem 'jquery-rails', '>= 1.0.12'
 
+#Twitter-Bootstrap
 gem "twitter-bootstrap-rails"
+
+#A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
+gem "kaminari"
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

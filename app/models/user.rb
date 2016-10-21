@@ -77,14 +77,31 @@ class User < ActiveRecord::Base
 
   end
 
-  def authentic(email,pass)
-    u = User.find_by_email(email)
-    tmp_cryp = Decrypter.new
-    if self.pwd == tmp_cryp.create_hash(pass,u.slt)
-      true
+  ## METHOD DISCARD
+  def authentic(login,pass)
+
+    if login.include? "@"
+      u = User.find_by_email(login)
     else
-      false
+      p = Phone.find_by_number('#{login}')
+      up = UserPhone.find_by_phone_id(p.id)
+      uf = up.user
     end
+
+    if u.nil? || uf.nil?
+      redirect_to login_user_path
+    else
+      puts '#########################'
+      tmp_cryp = Decrypter.new
+      if self.pwd == tmp_cryp.create_hash(pass,u.slt)
+        true
+      else
+        false
+      end
+    end
+
+
+
 
   end
 

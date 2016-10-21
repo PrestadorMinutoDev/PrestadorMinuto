@@ -4,7 +4,7 @@ class ProfessionsController < ApplicationController
   # GET /professions
   # GET /professions.json
   def index
-    @professions = Profession.all
+    @profession = Profession.all
   end
 
   # GET /professions/1

@@ -9,4 +9,18 @@ class Ad < ActiveRecord::Base
   accepts_nested_attributes_for :profession
   accepts_nested_attributes_for :user
   accepts_nested_attributes_for :images
+
+  attr_accessor :search
+
+  def self.search(search)
+    prof = Profession.find_by(name_m: search)
+    if prof.nil?
+      Ad.all
+    else
+      Ad.where(profession_id: prof.id)
+    end
+  end
+
+
+
 end

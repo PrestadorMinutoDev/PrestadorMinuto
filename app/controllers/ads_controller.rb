@@ -1,10 +1,15 @@
 class AdsController < ApplicationController
   before_action :set_ad, only: [:show, :edit, :update, :destroy]
+  before_filter :login_required, :only => ['my_ads']
 
   # GET /ads
   # GET /ads.json
   def index
     @ads = Ad.all
+  end
+
+  def index_by_profession
+    @ads = Ad.search(params[:search])
   end
 
   # GET /ads/1
@@ -23,8 +28,11 @@ class AdsController < ApplicationController
 
   # GET /ads/1/edit
   def edit
+
     params[:id] = current_user
     @ad = Ad.find_by(user_id: params[:id])
+    puts @ad.profession_id
+
   end
 
   # POST /ads
@@ -56,7 +64,8 @@ class AdsController < ApplicationController
   # PATCH/PUT /ads/1.json
   def update
     respond_to do |format|
-      @ad = Ad.find(params[:id])
+      @profession = Profession.find(params[:profession][:profession_id])
+      @ad.profession = @profession
       if @ad.update(ad_params)
         format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
         format.json { render :show, status: :ok, location: @ad }
@@ -77,6 +86,10 @@ class AdsController < ApplicationController
     end
   end
 
+  def my_ads
+    @ads = Ad.all.where(user_id: current_user)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ad
@@ -85,6 +98,6 @@ class AdsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ad_params
-      params.require(:ad).permit(:description, :rating_avg, profession_attributes: [:name_m, :name_f])
+      params.require(:ad).permit(:description, :rating_avg, :search ,profession_attributes: [:name_m, :name_f])
     end
 end

@@ -24,12 +24,15 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'new_ad', to: 'ads#new', as: 'new_ad'
-  get 'ad', to: 'ads#index', as: 'ad'
-  get 'show_ad/:id', to: 'ads#show', as: 'show_ad'
+  get 'ads', to: 'ads#index', as: 'ads'
+  get 'show_ad', to: 'ads#show', as: 'ad'
   get 'edit_ad/:id', to: 'ads#edit', as: 'edit_ad'
   put 'update_ad/:id/edit', to: 'ads#update', as: 'update_ad'
 
 
+  get 'my_ads', to: 'ads#my_ads', as: 'my_ads'
+
+  get 'ads/index_by_profession', to: 'ads#index_by_profession', as: 'index_by_profession'
   #resources :ads
   #resources :accounts
   #resources :account_resources
@@ -46,7 +49,7 @@ Rails.application.routes.draw do
   #resources :addresses
   #resources :phones
   #resources :operators
-  #resources :professions
+  resources :professions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
