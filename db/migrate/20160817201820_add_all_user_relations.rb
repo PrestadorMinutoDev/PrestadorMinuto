@@ -7,8 +7,5 @@ class AddAllUserRelations < ActiveRecord::Migration
     ##Foreign_Key address_id na tabela USERS.
     add_reference :users, :address, index: true,foreign_key: true
 
-    ##Foreign_Key image_id na tabela USERS.
-    add_reference :users, :image, index: true,foreign_key: true
-
   end
 end

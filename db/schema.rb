@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004113410) do
+ActiveRecord::Schema.define(version: 20161024174133) do
 
   create_table "account_kinds", force: :cascade do |t|
     t.string   "name",       limit: 55
@@ -51,16 +51,6 @@ ActiveRecord::Schema.define(version: 20161004113410) do
   add_index "accounts", ["account_kind_id"], name: "index_accounts_on_account_kind_id", using: :btree
   add_index "accounts", ["phone_id"], name: "index_accounts_on_phone_id", using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
-
-  create_table "ad_images", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "image_id",   limit: 4
-    t.integer  "ad_id",      limit: 4
-  end
-
-  add_index "ad_images", ["ad_id"], name: "index_ad_images_on_ad_id", using: :btree
-  add_index "ad_images", ["image_id"], name: "index_ad_images_on_image_id", using: :btree
 
   create_table "addresses", force: :cascade do |t|
     t.string   "complement",     limit: 255
@@ -106,12 +96,16 @@ ActiveRecord::Schema.define(version: 20161004113410) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.string   "path",       limit: 255
-    t.string   "title",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "pictures_file_name",    limit: 255
+    t.string   "pictures_content_type", limit: 255
+    t.integer  "pictures_file_size",    limit: 4
+    t.datetime "pictures_updated_at"
+    t.integer  "ad_id",                 limit: 4,   null: false
   end
+
+  add_index "images", ["ad_id"], name: "index_images_on_ad_id", using: :btree
 
   create_table "operators", force: :cascade do |t|
     t.string   "name",       limit: 25
@@ -198,7 +192,6 @@ ActiveRecord::Schema.define(version: 20161004113410) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "address_id",          limit: 4
-    t.integer  "image_id",            limit: 4
     t.string   "avatar_file_name",    limit: 255
     t.string   "avatar_content_type", limit: 255
     t.integer  "avatar_file_size",    limit: 4
@@ -207,7 +200,6 @@ ActiveRecord::Schema.define(version: 20161004113410) do
   end
 
   add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree
-  add_index "users", ["image_id"], name: "index_users_on_image_id", using: :btree
 
   add_foreign_key "account_resource_values", "account_resources"
   add_foreign_key "account_resource_values", "accounts"
@@ -216,8 +208,6 @@ ActiveRecord::Schema.define(version: 20161004113410) do
   add_foreign_key "accounts", "account_kinds"
   add_foreign_key "accounts", "phones"
   add_foreign_key "accounts", "users"
-  add_foreign_key "ad_images", "ads"
-  add_foreign_key "ad_images", "images"
   add_foreign_key "addresses", "cities"
   add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "postal_codes"
@@ -225,11 +215,11 @@ ActiveRecord::Schema.define(version: 20161004113410) do
   add_foreign_key "addresses", "streets"
   add_foreign_key "ads", "professions"
   add_foreign_key "ads", "users"
+  add_foreign_key "images", "ads"
   add_foreign_key "phones", "operators"
   add_foreign_key "rates", "ads"
   add_foreign_key "rates", "users"
   add_foreign_key "user_phones", "phones"
   add_foreign_key "user_phones", "users"
   add_foreign_key "users", "addresses"
-  add_foreign_key "users", "images"
 end

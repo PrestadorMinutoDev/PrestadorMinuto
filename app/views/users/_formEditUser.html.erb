@@ -13,6 +13,7 @@
 
     <script>
 
+
       var i = 1;
       $("#addMore").click(function(e) {
         e.preventDefault();
@@ -20,6 +21,7 @@
         $("#phones").append("<input name='user[phones_attributes]["+ i +"][number]' id='user_phones_attributes_"+i+"_number' type='text'/>");
         i++;
       });
+
 
     </script>
 
@@ -36,7 +38,7 @@
           <%= f.hidden_field :id%>
 
           <%= phones.label :number %>
-          <%= phones.text_field :number %> <button id="addMore" OnClick="AddPhone();"></button><br>
+          <%= phones.text_field :number %><button id="addMore"></button><br>
 
           <%= phones.label :haswp %>
           <%= phones.check_box :haswp %><br>

@@ -3,8 +3,7 @@ class Ad < ActiveRecord::Base
   belongs_to :user
 
   has_many :rates
-  has_many :ad_images
-  has_many :images,:through => :ad_images
+  has_many :images, :dependent => :destroy
 
   accepts_nested_attributes_for :profession
   accepts_nested_attributes_for :user
@@ -20,7 +19,4 @@ class Ad < ActiveRecord::Base
       Ad.where(profession_id: prof.id)
     end
   end
-
-
-
 end

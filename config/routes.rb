@@ -23,9 +23,13 @@ Rails.application.routes.draw do
   #root 'sessions#new'
   root 'home#index'
 
+
+  #ADS ROUTES
   get 'new_ad', to: 'ads#new', as: 'new_ad'
   get 'ads', to: 'ads#index', as: 'ads'
-  get 'show_ad', to: 'ads#show', as: 'ad'
+  post 'ads', to: 'ads#create'
+  delete 'delete_ad/:id', to: 'ads#destroy', as: 'delete_ad'
+  get 'show_ad/:id', to: 'ads#show', as: 'ad'
   get 'edit_ad/:id', to: 'ads#edit', as: 'edit_ad'
   put 'update_ad/:id/edit', to: 'ads#update', as: 'update_ad'
 
@@ -38,7 +42,7 @@ Rails.application.routes.draw do
   #resources :account_resources
   #resources :rates
   #resources :ad_images
-  #resources :images
+  resources :images
   #resources :user_phones
   resources :users
   #resources :resources
@@ -49,7 +53,7 @@ Rails.application.routes.draw do
   #resources :addresses
   #resources :phones
   #resources :operators
-  resources :professions
+  #resources :professions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

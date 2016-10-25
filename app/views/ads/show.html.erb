@@ -2,7 +2,7 @@
 
 <div class="col-md-3">
   <div class="showProfile">
-    <%= image_tag @ad.user.avatar.url(:original), class: 'img-responsive' %><br/>
+    <%= image_tag @ad.images[0].pictures.url(:original), class: 'img-responsive' %><br/>
     <span class="label label-primary"><%= @ad.user.name %></span>
     </div>
 </div>
@@ -60,4 +60,4 @@
       </div>
 
   </div>
-<%= link_to 'Back', home_index_path %>
+<%= link_to 'Back', ads_path %>

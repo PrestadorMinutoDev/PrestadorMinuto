@@ -1,4 +1,4 @@
-<%= form_for (@ad) do |f| %>
+<%= form_for @ad,:url =>{controller: "ads",:action => 'update'}, :method => "put"  do |f| %>
   <% if @ad.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@ad.errors.count, "error") %> prohibited this ad from being saved:</h2>
@@ -16,19 +16,17 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-      <%= collection_select :profession, :profession_id, Profession.order(:name_m),:id,:name_m%>
+    <%= collection_select :profession, :profession_id, Profession.order(:name_m),:id,:name_m%>
   </div>
 
     <div class="field">
       <%= collection_select :profession, :profession_id_1, Profession.order(:name_m),:id,:name_m%>
     </div>
 
-    <%= f.fields_for :images do |images|%>
-    <div class="field">
-      <%= images.label :pictures %><br>
-      <%= images.file_field :pictures %>
-    </div>
-    <% end %>
+      <div class="field">
+        <%= f.label :pictures %><br>
+        <%= f.file_field :pictures %>
+      </div>
 
   <div class="actions">
     <%= f.submit %>

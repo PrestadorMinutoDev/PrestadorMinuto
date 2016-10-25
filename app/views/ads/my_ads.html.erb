@@ -27,6 +27,9 @@
                     <%= link_to edit_ad_path(ad.id), class: 'btn btn-success btn-xs' do %>
                         <%= content_tag :span, "", :class => "glyphicon glyphicon-pencil" %>
                   <% end %>
+                  <%= link_to delete_ad_path(ad.id), :method => 'delete', class: 'btn btn-danger btn-xs' do %>
+                      <%= content_tag :span, "", :class => "glyphicon glyphicon-remove" %>
+                  <% end %>
 
             <% end %></td>
           </tr>
