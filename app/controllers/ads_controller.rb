@@ -41,16 +41,26 @@ class AdsController < ApplicationController
 
     @ad = Ad.new(ad_params)
     @profession = Profession.find(params[:profession][:profession_id])
+    @profession1 = Profession.find(params[:profession][:profession_id_1])
 
     ##Need pass a param with having a user_id
     params[:user_id] = current_user
     @user = User.find_by(id: params[:user_id])
     @ad.profession = @profession
+    @ad.profession_id_1 = @profession1
     @ad.user = @user
 
 
     respond_to do |format|
       if @ad.save
+
+        if params[:pictures]
+          #===== The magic is here ;)
+          params[:pictures].each { |image|
+            @ad.images.create(pictures: image)
+          }
+        end
+
         format.html { redirect_to @ad, notice: 'Ad was successfully created.' }
         format.json { render :show, status: :created, location: @ad }
       else
@@ -65,7 +75,9 @@ class AdsController < ApplicationController
   def update
     respond_to do |format|
       @profession = Profession.find(params[:profession][:profession_id])
+      @profession1 = Profession.find_by_profession_id_1(params[:profession][:profession_id_1])
       @ad.profession = @profession
+      @ad.profession_id_1 = @profession1.id
       if @ad.update(ad_params)
         format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
         format.json { render :show, status: :ok, location: @ad }
@@ -98,6 +110,6 @@ class AdsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ad_params
-      params.require(:ad).permit(:description, :rating_avg, :search ,profession_attributes: [:name_m, :name_f], image_attributes: [:pictures])
+      params.require(:ad).permit(:description, :rating_avg, :search ,profession_attributes: [:name_m, :name_f, :profession_id_1], image_attributes: [:pictures_file_name, :pictures_content_type, :pictures_file_size, :pictures_updated_at])
     end
 end

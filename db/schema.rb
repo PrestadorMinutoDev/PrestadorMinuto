@@ -72,15 +72,17 @@ ActiveRecord::Schema.define(version: 20161024174133) do
   add_index "addresses", ["street_id"], name: "index_addresses_on_street_id", using: :btree
 
   create_table "ads", force: :cascade do |t|
-    t.text     "description",   limit: 65535
-    t.decimal  "rating_avg",                  precision: 3, scale: 2
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.integer  "profession_id", limit: 4
-    t.integer  "user_id",       limit: 4
+    t.text     "description",     limit: 65535
+    t.decimal  "rating_avg",                    precision: 3, scale: 2
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.integer  "profession_id",   limit: 4
+    t.integer  "profession_id_1", limit: 4
+    t.integer  "user_id",         limit: 4
   end
 
   add_index "ads", ["profession_id"], name: "index_ads_on_profession_id", using: :btree
+  add_index "ads", ["profession_id_1"], name: "fk_rails_aa1e6c0780", using: :btree
   add_index "ads", ["user_id"], name: "index_ads_on_user_id", using: :btree
 
   create_table "cities", force: :cascade do |t|
@@ -130,10 +132,11 @@ ActiveRecord::Schema.define(version: 20161024174133) do
   end
 
   create_table "professions", force: :cascade do |t|
-    t.string   "name_m",     limit: 75
-    t.string   "name_f",     limit: 75
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "name_m",          limit: 75
+    t.string   "name_f",          limit: 75
+    t.integer  "profession_id_1", limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "rates", force: :cascade do |t|
@@ -214,6 +217,7 @@ ActiveRecord::Schema.define(version: 20161024174133) do
   add_foreign_key "addresses", "states"
   add_foreign_key "addresses", "streets"
   add_foreign_key "ads", "professions"
+  add_foreign_key "ads", "professions", column: "profession_id_1"
   add_foreign_key "ads", "users"
   add_foreign_key "images", "ads"
   add_foreign_key "phones", "operators"

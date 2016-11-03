@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+
   belongs_to :address
 
   has_one :account
@@ -12,18 +13,13 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :account
 
-
-  #EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   validates :email, :presence => true, :uniqueness => true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
-  #validates :doc, :presence => true, :uniqueness => true, :length => 11
+  validates :doc, :presence => true, :uniqueness => true, doc:true
   validates :pwd, confirmation: true
   validates_presence_of :name,:pwd
-  before_validation 'check_phones'
-  before_save 'encrypt_my_data','hash_my_pass', 'check_account'
-  after_find  'decrypt_my_data'
-
-
+  before_validation 'check_phones','encrypt_my_data','decrypt_my_data'
+  before_save 'hash_my_pass', 'check_account','encrypt_my_data'
 
   def encrypt_my_data
     tmpcryp = Decrypter.new

@@ -16,7 +16,8 @@ class Ad < ActiveRecord::Base
     if prof.nil?
       Ad.all
     else
-      Ad.where(profession_id: prof.id)
+      key = "%#{search}%"
+      Ad.where("profession_id LIKE #{prof.id} OR profession_id_1 LIKE #{prof.id}", search: key)
     end
   end
 end

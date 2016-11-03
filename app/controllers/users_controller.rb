@@ -1,5 +1,6 @@
 
 class UsersController < ApplicationController
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
  # before_filter :login_required, :except => ['new', 'register_user', 'create_register_user']
  # before_filter :block_access, :only =>['register_user']
@@ -45,7 +46,6 @@ class UsersController < ApplicationController
 
   # POST /register_user/create
   def create_register_user
-
    @user = User.new(register_user_params)
    @user.last_logon = Time.now
 
@@ -55,6 +55,7 @@ class UsersController < ApplicationController
         format.html { redirect_to home_index_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
+
         format.html { render :register_user }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

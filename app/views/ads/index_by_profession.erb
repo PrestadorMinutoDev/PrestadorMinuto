@@ -8,6 +8,7 @@
           <td>Nome: </td>
           <td>Descrição:</td>
           <td>Profissão:</td>
+          <td>Profissão 2:</td>
           <td>Criado em:</td>
           <td>Actions:</td>
         </tr>
@@ -19,25 +20,17 @@
               <td><%= ad.user.name.upcase %></td>
               <td><%= ad.description %></td>
               <td><%= ad.profession.name_m %></td>
+              <% @prof2 = Profession.find_by(profession_id_1: ad.profession_id_1) %>
+              <td><%= @prof2.name_m %></td>
               <td><%= created_date ad.created_at %></td>
               <td><%= link_to ad_path(ad), class: 'btn btn-primary btn-xs' do %>
                     <%= content_tag :span, "", :class => "glyphicon glyphicon-eye-open" %>
                   <% end %>
-                  <% if ad.user_id == session[:user_id] %>
-                    <%= link_to edit_ad_path(ad.id), class: 'btn btn-success btn-xs' do %>
-                        <%= content_tag :span, "", :class => "glyphicon glyphicon-pencil" %>
-                    <% end %>
-                    <%= link_to ad_path(ad.id), :method => 'delete', class: 'btn btn-danger btn-xs' do %>
-                        <%= content_tag :span, "", :class => "glyphicon glyphicon-remove" %>
-                  <% end %>
-
-            <% end %></td>
           </tr>
         </div>
         </tbody>
         <% end %>
       </table>
-
 <%end%>
 
 </body>

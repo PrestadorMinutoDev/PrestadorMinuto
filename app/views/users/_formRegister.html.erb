@@ -45,7 +45,6 @@
     <%= f.fields_for :phones do |phones| %>
         <div id="phones">
           <%= phones.label :number %>
-          
           <%= phones.text_field :number %><button id="addMore" OnClick="AddPhone();"></button><br>
         </div>
         <div>

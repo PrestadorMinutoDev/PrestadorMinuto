@@ -13,7 +13,7 @@ states = State.create([{ name: 'AC' },{ name: 'AL' },{ name: 'AP' },{ name: 'AM'
                        { name: 'GO' },{ name: 'MA' },{ name: 'MT' },{ name: 'MS' },{ name: 'MG' },{ name: 'PA' },{ name: 'PB' },{ name: 'PR' },
                        { name: 'PI' },{ name: 'RJ' },{ name: 'RN' },{ name: 'RS' },{ name: 'RO' },{ name: 'RR' },{ name: 'SC' },{ name: 'SP' },
                        { name: 'SE' },{ name: 'TO' }])
-professions = Profession.create([{ name_m: 'Pintor', name_f: 'Pintora'}, {name_m: 'Pedreiro', name_f: 'Pedreira'}])
+professions = Profession.create([{ name_m: 'Pintor', name_f: 'Pintora', profession_id_1: 1}, {name_m: 'Pedreiro', name_f: 'Pedreira', profession_id_1: 2}])
 account_kind = AccountKind.create([{name: 'Free'},{name: 'Basic'},{name: 'Premium'}])
 resource = Resource.create([{name: 'Click', parameterType: 'INT'}, {name: 'Certify', parameterType: 'BOOL'},
                             {name: 'AdNumber', parameterType: 'INT'},{name: 'AdPriority', parameterType: 'INT'}])

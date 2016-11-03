@@ -40,6 +40,11 @@
                   <td><%= @ad.profession.name_m %></td>
                 </tr>
                 <tr>
+                  <td class="table-title">Profissão 2</td>
+                  <% @prof2 = Profession.find_by(profession_id_1: @ad.profession_id_1) %>
+                  <td><%= @prof2.name_m %></td>
+                </tr>
+                <tr>
                   <td class="table-title">Descrição</td>
                   <td><%= @ad.description %></td>
                 </tr>
