@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'payment/index'
+
   get 'login', to: 'sessions#new', as: 'login_user'
 
   get 'registerUser', to: 'users#register_user'
@@ -37,6 +39,14 @@ Rails.application.routes.draw do
   get 'my_ads', to: 'ads#my_ads', as: 'my_ads'
 
   get 'ads/index_by_profession', to: 'ads#index_by_profession', as: 'index_by_profession'
+
+
+  get 'payment', to: 'payment#index', as: 'payment'
+  get 'new_payment', to: 'payment#new', as: 'new_payment'
+  post 'create_transaction', to: 'payment#create_transaction'
+
+
+  #resources  :payment
   #resources :ads
   #resources :accounts
   #resources :account_resources

@@ -1,0 +1,57 @@
+<%= form_for @payment,:url =>{controller: "payment",:action => 'create_transaction'}, :method => "post" do |f| %>
+
+    <% if @payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@payment.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+      <% @payment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+     <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :amount %><br>
+      <%= f.text_field :amount %>
+    </div>
+
+    <div class="field">
+      <%= f.label :cardNumber %><br>
+      <%= f.text_field :cardNumber %>
+    </div>
+
+    <div class="field">
+      <%= f.label :monthCard %><br>
+      <%= f.text_field :monthCard %>
+    </div>
+
+    <div class="field">
+      <%= f.label :yearCard %><br>
+      <%= f.text_field :yearCard %>
+    </div>
+
+    <div class="field">
+      <%= f.label :securityCode %><br>
+      <%= f.text_field :securityCode %>
+    </div>
+
+    <div class="field">
+      <%= f.label :holder %><br>
+      <%= f.text_field :holder %>
+    </div>
+
+    <div class="field">
+      <%= f.label :brand %><br>
+      <%= f.text_field :brand %>
+    </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
