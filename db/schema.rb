@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117163351) do
+ActiveRecord::Schema.define(version: 20161122115645) do
 
   create_table "account_kinds", force: :cascade do |t|
     t.string   "name",       limit: 55
@@ -116,17 +116,21 @@ ActiveRecord::Schema.define(version: 20161117163351) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "name",         limit: 255
-    t.integer  "amount",       limit: 4
-    t.integer  "cardNumber",   limit: 4
-    t.integer  "monthCard",    limit: 4
-    t.integer  "yearCard",     limit: 4
-    t.integer  "securityCode", limit: 4
-    t.string   "holder",       limit: 255
-    t.string   "brand",        limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "paymentId",        limit: 255
+    t.string   "name",             limit: 255
+    t.integer  "amount",           limit: 4
+    t.string   "cardNumber",       limit: 255
+    t.integer  "monthCard",        limit: 4
+    t.integer  "yearCard",         limit: 4
+    t.string   "holder",           limit: 255
+    t.string   "brand",            limit: 255
+    t.string   "recurrentPayment", limit: 255
+    t.integer  "user_id",          limit: 4,   null: false
   end
+
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
     t.string   "number",      limit: 11
@@ -233,6 +237,7 @@ ActiveRecord::Schema.define(version: 20161117163351) do
   add_foreign_key "ads", "professions", column: "profession_id_1"
   add_foreign_key "ads", "users"
   add_foreign_key "images", "ads"
+  add_foreign_key "payments", "users"
   add_foreign_key "phones", "operators"
   add_foreign_key "rates", "ads"
   add_foreign_key "rates", "users"

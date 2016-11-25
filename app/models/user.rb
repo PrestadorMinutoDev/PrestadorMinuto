@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   belongs_to :address
 
   has_one :account
+  ##Pagamentos Cancelados, Pendentes
   has_many :user_phones
+  has_many :payments
   has_many :phones,:through => :user_phones
 
 
@@ -12,6 +14,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :phones
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :account
+  accepts_nested_attributes_for :payments
 
   validates :email, :presence => true, :uniqueness => true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX

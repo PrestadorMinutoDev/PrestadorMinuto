@@ -1,35 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+
 <p>
   <strong>Name:</strong>
   <%= @payment.name %>
 </p>
 
-
 <p>
-  <strong>Doc:</strong>
-  <%= @payment.doc %>
+  <strong>Card Number:</strong>
+  <%= 'xxxx-xxxx-xxxx-' + @payment.cardNumber %>
 </p>
-
-<p>
-  <strong>Birthdate:</strong>
-  <%= @payment.birthdate %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @payment.email %>
-</p>
-
-<p>
-  <strong>Last logon:</strong>
-  <%= @payment.last_logon %>
-</p>
-
-<p>
-  <strong>Certdate:</strong>
-  <%= @payment.certdate %>
-</p>
-
 
 <%= link_to 'Back', payment_index_path %>

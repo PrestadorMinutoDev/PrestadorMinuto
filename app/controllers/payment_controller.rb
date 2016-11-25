@@ -1,4 +1,5 @@
 class PaymentController < ApplicationController
+  before_filter :login_required
 
   include HttpartyHelper
 
@@ -7,19 +8,29 @@ class PaymentController < ApplicationController
 
   def new
     @payment = Payment.new
+    @payment.build_user
+  end
+
+  def show
+    @payment = Payment.find_by(user_id: current_user.id)
   end
 
   def create_transaction
     @payment = Payment.new(payment_params)
 
     PaymentJSON(@payment.name, @payment.amount,@payment.cardNumber,@payment.monthCard,
-                @payment.yearCard,@payment.securityCode,@payment.holder,@payment.brand)
+                @payment.yearCard,params[:securityCode],@payment.holder,@payment.brand)
+
+    @payment.user = current_user
+    @payment.paymentId = @paymentId
+    @payment.recurrentPayment = @recurrentPayment
+
 
 
     respond_to do |format|
       if @payment.save
         #redirect_to action: 'show', id:@user.id
-        format.html { redirect_to payment_index_path, notice: 'Payment successfully.' }
+        format.html { redirect_to payment_index_path, notice: @message }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new }
@@ -29,7 +40,7 @@ class PaymentController < ApplicationController
   end
 
   def payment_params
-    params.require(:payment).permit(:name, :amount, :cardNumber, :monthCard, :yearCard, :securityCode, :holder, :brand)
+    params.require(:payment).permit(:name, :amount, :cardNumber, :monthCard, :yearCard, :securityCode, :holder, :brand, :recurrentPayment)
   end
 
 

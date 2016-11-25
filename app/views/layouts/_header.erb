@@ -32,6 +32,7 @@
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
               <li>
+                <%= link_to "Payment", payment_index_path %>
                 <%= link_to "Profile", show_register_user_path(current_user) %>
                 <%= link_to "Settings", edit_register_user_path(cookies.signed[:guest_id]) %>
                 <%= link_to "Log out", sign_out_path, method: "delete" %>

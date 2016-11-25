@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
 
   get 'payment', to: 'payment#index', as: 'payment'
+  get 'show_payment', to: 'payment#show', as: 'show_payment'
   get 'new_payment', to: 'payment#new', as: 'new_payment'
   post 'create_transaction', to: 'payment#create_transaction'
 
