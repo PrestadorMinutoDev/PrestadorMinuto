@@ -1,14 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 
-<p>
-  <strong>Name:</strong>
-  <%= @payment.name %>
-</p>
+<% if @payment %>
+  <p>
+    <strong>Name:</strong>
+    <%= @payment.name %>
+  </p>
 
-<p>
-  <strong>Card Number:</strong>
-  <%= 'xxxx-xxxx-xxxx-' + @payment.cardNumber %>
-</p>
+  <p>
+    <strong>Card Number:</strong>
+    <%= 'xxxx-xxxx-xxxx-' + @payment.cardNumber %>
+  </p>
+
+  <p>
+    <strong>End Date:</strong>
+    <%= @payment.endDate %>
+  </p>
+<%else%>
+  <h1><li><%= link_to 'Premium Account',  new_payment_path  %></li></h1>
+<%end%>
+
 
 <%= link_to 'Back', payment_index_path %>

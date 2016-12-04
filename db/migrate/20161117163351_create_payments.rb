@@ -13,6 +13,7 @@ class CreatePayments < ActiveRecord::Migration
       t.string :holder
       t.string :brand
       t.string :recurrentPayment
+      t.string :endDate
     end
   end
 end

@@ -28,11 +28,8 @@ class AdsController < ApplicationController
 
   # GET /ads/1/edit
   def edit
-
     params[:id] = current_user
     @ad = Ad.find_by(user_id: params[:id])
-    puts @ad.profession_id
-
   end
 
   # POST /ads
@@ -40,16 +37,17 @@ class AdsController < ApplicationController
   def create
 
     @ad = Ad.new(ad_params)
+
     @profession = Profession.find(params[:profession][:profession_id])
     @profession1 = Profession.find(params[:profession][:profession_id_1])
 
-    ##Need pass a param with having a user_id
-    params[:user_id] = current_user
-    @user = User.find_by(id: params[:user_id])
-    @ad.profession = @profession
-    @ad.profession_id_1 = @profession1
-    @ad.user = @user
 
+
+    ##Need pass a param with having a user_id
+    @user = User.find_by(id: current_user)
+    @ad.profession_id = @profession.id
+    @ad.profession_id_1 = @profession1.id
+    @ad.user_id = @user.id
 
     respond_to do |format|
       if @ad.save
@@ -110,6 +108,6 @@ class AdsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ad_params
-      params.require(:ad).permit(:description, :rating_avg, :search ,profession_attributes: [:name_m, :name_f, :profession_id_1], image_attributes: [:pictures_file_name, :pictures_content_type, :pictures_file_size, :pictures_updated_at])
+      params.require(:ad).permit(:description, :rating_avg, :user_id , :search ,profession_attributes: [:name_m, :name_f, :profession_id , :profession_id_1], image_attributes: [:pictures_file_name, :pictures_content_type, :pictures_file_size, :pictures_updated_at])
     end
 end

@@ -1,5 +1,5 @@
 <%= form_for @payment,:url =>{controller: "payment",:action => 'create_transaction'}, :method => "post" do |f| %>
-
+    <p id="notice"><%= notice %></p>
     <% if @payment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@payment.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+    <%= f.select :timeAccount, ['Mensal','Anual']%>
      <div class="field">
       <%= f.label :name %><br>
       <%= f.text_field :name %>

@@ -1,6 +1,5 @@
 class Payment < ActiveRecord::Base
   validates :name, :presence => true
-  validates :amount, :presence => true
   validates :cardNumber, :presence => true, length: { is: 16 }
   validates :monthCard, :presence => true, length: { is: 2 }
   validates :yearCard, :presence => true, length: { is: 4 }
@@ -10,9 +9,10 @@ class Payment < ActiveRecord::Base
 
   belongs_to :user
 
-  attr_accessor :securityCode
+  attr_accessor :securityCode, :timeAccount
 
   before_save 'card_encrypt'
+  after_save 'approve_payment'
 
   def card_encrypt
     card = self.cardNumber.to_s[-4, 4]
@@ -20,4 +20,9 @@ class Payment < ActiveRecord::Base
     self.cardNumber = card_saving
 
   end
+
+  def approve_payment
+    self.user.account.account_kind = AccountKind.find(2)
+  end
+
 end

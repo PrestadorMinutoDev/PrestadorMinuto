@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   validates :email, :presence => true, :uniqueness => true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
+
+  ##doc:true = enable validator DocValidator
   validates :doc, :presence => true, :uniqueness => true, doc:true
   validates :pwd, confirmation: true
   validates_presence_of :name,:pwd

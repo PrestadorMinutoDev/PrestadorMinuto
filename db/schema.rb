@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20161122115645) do
     t.string   "holder",           limit: 255
     t.string   "brand",            limit: 255
     t.string   "recurrentPayment", limit: 255
+    t.string   "endDate",          limit: 255
     t.integer  "user_id",          limit: 4,   null: false
   end
 
