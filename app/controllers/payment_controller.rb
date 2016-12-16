@@ -13,6 +13,9 @@ class PaymentController < ApplicationController
 
   def show
     @payment = Payment.find_by(user_id: current_user.id)
+    unless @payment.nil?
+      result_transactions(@payment.paymentId)
+    end
   end
 
   def create_transaction
@@ -37,10 +40,6 @@ class PaymentController < ApplicationController
       if @message == 'Operation Successful'
         ## IF Operation Sucessful save the payment
         if @payment.save
-
-          @user = User.find(current_user)
-          @user.account.account_kind_id = 2
-
 
           #redirect_to action: 'show', id:@user.id
           format.html { redirect_to payment_index_path, notice: @message }

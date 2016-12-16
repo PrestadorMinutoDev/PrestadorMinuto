@@ -5,7 +5,7 @@ module CieloHelper
   include HTTParty
 
 
-#include CieloHelper - Para adicionar no controller
+#include CieloHelper -- Adding in controller
   def Pagando(name,cardNumber,monthCard, yearCard,securityCode,holder,brand,time)
 
     ## PAGAMENTOS MENSAIS
@@ -68,7 +68,7 @@ module CieloHelper
                                             "Type" => "CreditCard",
                                             "Amount" => 24000,
                                             ##PARCELAS
-                                            "Installments" => 2,
+                                            "Installments" => 5,
                                             "SoftDescriptor" => "PrestMinuto",
                                             "RecurrentPayment" => {
                                                 "AuthorizeNow" => "true",
@@ -114,9 +114,9 @@ end
 
   end
 
-  def result_transactions
+  def result_transactions(paymentId)
     #MerchantOrderId
-    @urlstring_to_post = "https://apiquerysandbox.cieloecommerce.cielo.com.br/1/sales/2014111703"
+    @urlstring_to_post = "https://apiquerysandbox.cieloecommerce.cielo.com.br/1/sales/#{paymentId}"
 
 
     request = HTTParty.get(@urlstring_to_post,
@@ -126,6 +126,8 @@ end
                                          'MerchantKey' => 'WXFQVNAPIREVWZFKUCBSNIESRDEKDVLXLYRHTKRU'},
                             :body => {"MerchantOrderId" => "2014111703"})
 
+    ans = JSON.parse(request.body)
+    @name = ans['Customer']['Name']
     puts request
   end
 

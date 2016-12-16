@@ -7,6 +7,8 @@ class Payment < ActiveRecord::Base
   validates :holder, :presence => true
   validates :brand, :presence => true
 
+  validates :user_id, :uniqueness => { message: "has already have payment." }
+
   belongs_to :user
 
   attr_accessor :securityCode, :timeAccount
@@ -22,7 +24,10 @@ class Payment < ActiveRecord::Base
   end
 
   def approve_payment
-    self.user.account.account_kind = AccountKind.find(2)
+    @user = User.find(self.user_id)
+    @account = Account.find_by_user_id(@user)
+    @account.account_kind_id = 2
+    @account.save
   end
 
 end

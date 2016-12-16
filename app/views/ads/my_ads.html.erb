@@ -2,6 +2,11 @@
 </head>
 <body>
 <% if @ads.size > 0 %>
+    <% @ads.each do |report| %>
+        <% @ad_acc_id = report.Adnumber.account_kind.id %>
+        <% @ad_value = report.Adnumber.value %>
+        <% @account_kind  = report.user_kind.id	  %>
+    <% end %>
       <table class="table table-hover">
         <thead>
         <tr>
@@ -44,6 +49,10 @@
   <%else%>
     <h1><li><%= link_to 'Create new Ad',  new_ad_path  %></li></h1>
 <%end%>
+
+<% if @ad_acc_id == @account_kind && @ads.size < @ad_value.to_i %>
+    <h1><li><%= link_to 'Create new Ad',  new_ad_path  %></li></h1>
+<%end %>
 
 </body>
 </html>
